@@ -1,11 +1,9 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Text, StyleSheet, AsyncStorage, Dimensions } from "react-native";
+import { Text, StyleSheet, Dimensions } from "react-native";
 import { Container, Content, Card, CardItem, Body } from "native-base";
 import _ from "lodash";
-
-import { requestMainData } from "../../actions/upsas/mainDataReqAction";
-
+//components
 import Gauge from "../../components/Gauge";
 import PowerStatusGrid from "../../components/PowerStatusGrid";
 import WeatherCastGrid from "../../components/WeatherCastGrid";
@@ -13,17 +11,18 @@ import WeatherCastGrid from "../../components/WeatherCastGrid";
 const { width, height } = Dimensions.get("window"); // 장치 화면 크기
 
 const HomeScreen = props => {
+  // 메인 데이터 요청
   useEffect(() => {}, []);
 
   return (
     <Container style={styles.container}>
-      <Content padder style={{ flex: 1 }}>
+      <Content>
         <Card>
           <CardItem header bordered>
             <Text>기상정보</Text>
           </CardItem>
           <CardItem bordered>
-            <Body style={styles.cardBody}>
+            <Body>
               <WeatherCastGrid currWeatherCastInfo={""} />
             </Body>
           </CardItem>
@@ -33,17 +32,17 @@ const HomeScreen = props => {
             <Text>발전 그래프</Text>
           </CardItem>
           <CardItem>
-            <Body style={styles.cardBody}>
+            <Body>
               <Gauge powerGenerationInfo={""} />
             </Body>
           </CardItem>
         </Card>
-        <Card style={{ flex: 1 }}>
+        <Card>
           <CardItem header>
             <Text>발전 현황</Text>
           </CardItem>
           <CardItem>
-            <Body style={styles.cardBody}>
+            <Body>
               <PowerStatusGrid powerGenerationInfo={""} />
             </Body>
           </CardItem>
@@ -51,16 +50,6 @@ const HomeScreen = props => {
       </Content>
     </Container>
   );
-};
-
-const getUserInfo = async () => {
-  try {
-    const userInfo = await AsyncStorage.getItem("userInfo");
-    if (userInfo != undefined) {
-    }
-  } catch (error) {
-    alert("Can`t find userInfo...");
-  }
 };
 
 const mapStateToProps = state => {
@@ -78,11 +67,8 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    height: height
-  },
-  cardBody: {
-    justifyContent: "center",
-    alignItems: "center",
-    margin: "2%"
+    // width: width,
+    // height: height,
+    backgroundColor: "red" //FIXME: 삭제
   }
 });
