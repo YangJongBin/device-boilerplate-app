@@ -5,7 +5,9 @@ import { Header, Body, Container, Right, ActionSheet, Title, Left } from "native
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import _ from "lodash";
 
-import { requestChangeMainSeq } from "../actions/mainSeqChangeAction";
+import { requestChangeMainSeq } from "../actions/upsas/mainSeqChangeAction";
+
+MaterialIcon.loadFont();
 
 const customHeader = props => {
   const { selectedPlaceName = "", siteList = [] } = props;

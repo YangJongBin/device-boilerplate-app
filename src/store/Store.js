@@ -5,7 +5,7 @@ import { Root } from "native-base";
 
 // import thunk from 'redux-thunk';
 
-import reducers from "../reducers/reducers";
+import reducers from "../reducers/upsas/reducers";
 import Navigation from "../Navigation";
 import middleware from "./middleware";
 

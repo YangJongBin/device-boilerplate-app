@@ -1,34 +1,31 @@
-import React from "react";
-import { StyleSheet, View } from "react-native";
-import HighchartsReactNative from "@highcharts/highcharts-react-native";
+import React, { Component } from "react";
+import _ from "lodash";
+import ChartView from "react-native-highcharts";
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
+const LinChart = props => {
+  const Highcharts = "Highcharts";
+  const { chartInfo = {} } = props;
 
-    this.state = {
-      chartOptions: {
-        series: [
-          {
-            data: [1, 3, 2]
-          }
-        ]
-      }
-    };
-  }
+  const conf = {
+    chart: {
+      type: "spline",
+      animation: Highcharts.svg, // don't animate in old IE
+      marginRight: 10
+    },
+    chartInfo
+  };
 
-  render() {
-    return (
-      <View>
-        <HighchartsReactNative styles={styles.container} options={this.state.chartOptions} />
-      </View>
-    );
-  }
-}
+  const options = {
+    global: {
+      useUTC: false
+    },
+    lang: {
+      decimalPoint: ",",
+      thousandsSep: "."
+    }
+  };
 
-const styles = StyleSheet.create({
-  container: {
-    backgroundColor: "#fff",
-    justifyContent: "center"
-  }
-});
+  return <ChartView style={{ height: 300 }} config={conf} options={options}></ChartView>;
+};
+
+export default LinChart;

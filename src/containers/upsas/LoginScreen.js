@@ -1,31 +1,22 @@
-import React, {Component, useEffect} from 'react';
-import {connect} from 'react-redux';
-import {Text, StyleSheet, AsyncStorage} from 'react-native';
-import {
-  Container,
-  Content,
-  Input,
-  Form,
-  Item,
-  Icon,
-  Button,
-  Toast,
-} from 'native-base';
+import React, { Component, useEffect } from "react";
+import { connect } from "react-redux";
+import { Text, StyleSheet, AsyncStorage } from "react-native";
+import { Container, Content, Input, Form, Item, Icon, Button, Toast } from "native-base";
 //actions...
-import {requestLogin} from '../actions/loginAction';
+import { requestLogin } from "../../actions/upsas/loginAction";
 
 const LoginScreen = props => {
-  const {isLoggedIn} = props.loginReducerInfo; // 로그인 reduce 정보
+  const { isLoggedIn } = props.loginReducerInfo; // 로그인 reduce 정보
 
   // 로그인 성공 유무에 대한 이벤트
   useEffect(() => {
     // FIXME: 로그인 실패 메세지 수정
     if (isLoggedIn) {
-      props.navigation.navigate('App');
+      props.navigation.navigate("App");
     } else if (isLoggedIn === false) {
       Toast.show({
-        type: 'danger',
-        text: '로그인 실패',
+        type: "danger",
+        text: "로그인 실패"
       });
     }
   }, [isLoggedIn]);
@@ -60,7 +51,8 @@ const LoginScreen = props => {
           onPress={() => {
             props.loginHandler(this.userid, this.password);
           }}
-          style={styles.loginBtn}>
+          style={styles.loginBtn}
+        >
           <Text style={styles.loginText}> LOGIN </Text>
         </Button>
       </Form>
@@ -70,7 +62,7 @@ const LoginScreen = props => {
 
 const mapStateToProps = state => {
   return {
-    loginReducerInfo: state.loginReducerInfo,
+    loginReducerInfo: state.loginReducerInfo
   };
 };
 
@@ -78,37 +70,37 @@ const mapDispatchToProps = dispatch => {
   return {
     loginHandler: (id, pw) => {
       dispatch(requestLogin(id, pw));
-    },
+    }
   };
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps,
+  mapDispatchToProps
 )(LoginScreen);
 
 // style...
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flex: 1
   },
   loginForm: {
     flex: 1,
     padding: 10,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center"
   },
   loginInput: {
-    margin: 10,
+    margin: 10
   },
   loginBtn: {
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 5,
-    backgroundColor: '#2f3640',
+    backgroundColor: "#2f3640"
   },
   loginText: {
-    color: 'white',
-  },
+    color: "white"
+  }
 });

@@ -1,8 +1,4 @@
-import {
-  TREND_DATA_FAILURE,
-  TREND_DATA_REQUEST,
-  TREND_DATA_SUCCESS
-} from '../actions/actionTypes';
+import { TREND_DATA_FAILURE, TREND_DATA_REQUEST, TREND_DATA_SUCCESS } from "../../actions/actionTypes";
 
 const defaultState = {
   trendDataInfo: {
@@ -20,9 +16,9 @@ const defaultState = {
         siteId: undefined,
         siteList: [
           {
-            siteId: '',
-            name: '',
-            m_name: ''
+            siteId: "",
+            name: "",
+            m_name: ""
           }
         ]
       }
@@ -36,8 +32,8 @@ const defaultState = {
           subtitle: undefined,
           yAxis: [
             {
-              yTitle: '',
-              dataUnit: ''
+              yTitle: "",
+              dataUnit: ""
             }
           ],
           plotSeries: {
@@ -46,9 +42,9 @@ const defaultState = {
           },
           series: [
             {
-              name: '',
-              color: '',
-              tooltop: { valueSuffix: '' },
+              name: "",
+              color: "",
+              tooltop: { valueSuffix: "" },
               data: [null, null]
             }
           ]

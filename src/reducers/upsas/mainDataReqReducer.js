@@ -1,4 +1,4 @@
-import { MAIN_DATA_REQUEST, MAIN_DATA_SUCCESS, MAIN_DATA_FAILURE } from "../actions/actionTypes";
+import { MAIN_DATA_REQUEST, MAIN_DATA_SUCCESS, MAIN_DATA_FAILURE } from "../../actions/actionTypes";
 
 const defaultState = {
   mainDataInfo: {

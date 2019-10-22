@@ -7,6 +7,8 @@ import Ionicon from "react-native-vector-icons/Ionicons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
 Fontisto.loadFont();
+Ionicon.loadFont();
+MaterialCommunityIcons.loadFont();
 
 const WeatherCastGrid = props => {
   const { temp = 0, ws = 0, inclinedSolar = 0, wf = 1 } = props.currWeatherCastInfo;

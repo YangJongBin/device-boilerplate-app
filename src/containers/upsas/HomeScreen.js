@@ -4,31 +4,23 @@ import { Text, StyleSheet, AsyncStorage, Dimensions } from "react-native";
 import { Container, Content, Card, CardItem, Body } from "native-base";
 import _ from "lodash";
 
-import { requestMainData } from "../actions/mainDataReqAction";
+import { requestMainData } from "../../actions/upsas/mainDataReqAction";
 
-import Header from "../components/Header";
-import Gauge from "../components/Gauge";
-import PowerStatusGrid from "../components/PowerStatusGrid";
-import WeatherCastGrid from "../components/WeatherCastGrid";
+import Header from "../../components/Header";
+import Gauge from "../../components/Gauge";
+import PowerStatusGrid from "../../components/PowerStatusGrid";
+import WeatherCastGrid from "../../components/WeatherCastGrid";
 
 const { width, height } = Dimensions.get("window"); // 장치 화면 크기
 
 const HomeScreen = props => {
-  const { mainSeqChangeReducerInfo, mainDataReqReducerInfo, loginReducerInfo } = props;
-  const { selectedMainSeq } = mainSeqChangeReducerInfo;
-  const { headerInfo, containerInfo } = mainDataReqReducerInfo.mainDataInfo;
-  const { headerEnv, headerMenu } = headerInfo; // 해더 정보
-  const { powerGenerationInfo } = containerInfo; // 홈 메인 정보
-  const { siteId, siteList } = headerMenu; // 장소 고유 야이디, 모든 장소 리스트
-  const { currWeatherCastInfo } = headerEnv; // 기상 환경 정보
-
-  useEffect(() => {
-    _.isUndefined(selectedMainSeq) ? props.reqMainDataHandler("") : props.reqMainDataHandler(selectedMainSeq);
-  }, [selectedMainSeq]);
+  // useEffect(() => {
+  //   _.isUndefined(selectedMainSeq) ? props.reqMainDataHandler("") : props.reqMainDataHandler(selectedMainSeq);
+  // }, [selectedMainSeq]);
 
   return (
     <Container style={styles.container}>
-      <Header siteList={siteList} navigation={props.navigation} />
+      <Header siteList={""} navigation={props.navigation} />
       <Content padder style={{ flex: 1 }}>
         <Card>
           <CardItem header bordered>
@@ -36,7 +28,7 @@ const HomeScreen = props => {
           </CardItem>
           <CardItem bordered>
             <Body style={styles.cardBody}>
-              <WeatherCastGrid currWeatherCastInfo={currWeatherCastInfo} />
+              <WeatherCastGrid currWeatherCastInfo={""} />
             </Body>
           </CardItem>
         </Card>
@@ -46,7 +38,7 @@ const HomeScreen = props => {
           </CardItem>
           <CardItem>
             <Body style={styles.cardBody}>
-              <Gauge powerGenerationInfo={powerGenerationInfo} />
+              <Gauge powerGenerationInfo={""} />
             </Body>
           </CardItem>
         </Card>
@@ -56,7 +48,7 @@ const HomeScreen = props => {
           </CardItem>
           <CardItem>
             <Body style={styles.cardBody}>
-              <PowerStatusGrid powerGenerationInfo={powerGenerationInfo} />
+              <PowerStatusGrid powerGenerationInfo={""} />
             </Body>
           </CardItem>
         </Card>

@@ -8,10 +8,10 @@ import Entypo from "react-native-vector-icons/Entypo";
 // component
 import MenuButton from "./components/MenuButton";
 // screen...
-import AuthLoading from "./containers/AuthLoading";
-import HomeScreen from "./containers/HomeScreen";
-import LoginScreen from "./containers/LoginScreen";
-import TrendScreen from "./containers/TrendScreen";
+import AuthLoading from "./containers/upsas/AuthLoading";
+import HomeScreen from "./containers/upsas/HomeScreen";
+import LoginScreen from "./containers/upsas/LoginScreen";
+import TrendScreen from "./containers/upsas/TrendScreen";
 import { Icon } from "native-base";
 // import LineChart from '../components/LineChart';
 
@@ -29,6 +29,7 @@ const AppStack = createBottomTabNavigator(
         const { routeName } = navigation.state;
         let IconComponent = Entypo;
         let iconName;
+
         if (routeName === "Home") {
           // IconComponent = HomeIconWithBadge;
           // iconName = `ios-information-circle${focused ? "" : "-outline"}`;

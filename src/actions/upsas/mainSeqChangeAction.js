@@ -1,4 +1,4 @@
-import { CHANGE_PLACE } from "./actionTypes";
+import { CHANGE_PLACE } from "../actionTypes";
 
 export const requestChangeMainSeq = mainSeq => {
   return {

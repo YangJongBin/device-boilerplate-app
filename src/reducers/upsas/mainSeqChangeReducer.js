@@ -1,4 +1,4 @@
-import { CHANGE_PLACE_FAILURE } from '../actions/actionTypes';
+import { CHANGE_PLACE_FAILURE } from "../../actions/actionTypes";
 
 const defaultState = {
   selectedMainSeq: undefined // 현재 선택된 장소 정보
