@@ -1,41 +1,37 @@
 import React, { Component, useEffect } from "react";
 import { Text, StyleSheet, View, ScrollView } from "react-native";
+import { Card } from "native-base";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import { reqTrendData } from "../../actions/upsas/trendDataReqAction";
+import test from "../../../testData";
 
 import LineChart from "../../components/LineChart";
-import Header from "../../components/Header";
 
 const TrendScreen = props => {
-  useEffect(() => {
-    props.trendDataReqHandler("");
-  }, []);
+  useEffect(() => {}, []);
 
-  const sensorTrendList = [{}]; // FIXME: 삭제
+  const sensorTrendList = test;
   const lineCharts = _.map(sensorTrendList, sensorTrendInfo => {
-    return <LineChart chartInfo={sensorTrendInfo}></LineChart>;
+    return (
+      <Card>
+        <LineChart chartInfo={sensorTrendInfo}></LineChart>
+      </Card>
+    );
   });
 
   return <ScrollView>{lineCharts}</ScrollView>;
 };
 
-const mapStateToProps = () => {
+const mapStateToProps = state => {
   return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    trendDataReqHandler: () => {
-      dispatch(reqTrendData());
-    }
-  };
+  return {};
 };
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps
 )(TrendScreen);
-
-const styles = StyleSheet.create({});

@@ -6,7 +6,6 @@ import _ from "lodash";
 
 import { requestMainData } from "../../actions/upsas/mainDataReqAction";
 
-import Header from "../../components/Header";
 import Gauge from "../../components/Gauge";
 import PowerStatusGrid from "../../components/PowerStatusGrid";
 import WeatherCastGrid from "../../components/WeatherCastGrid";
@@ -14,13 +13,10 @@ import WeatherCastGrid from "../../components/WeatherCastGrid";
 const { width, height } = Dimensions.get("window"); // 장치 화면 크기
 
 const HomeScreen = props => {
-  // useEffect(() => {
-  //   _.isUndefined(selectedMainSeq) ? props.reqMainDataHandler("") : props.reqMainDataHandler(selectedMainSeq);
-  // }, [selectedMainSeq]);
+  useEffect(() => {}, []);
 
   return (
     <Container style={styles.container}>
-      <Header siteList={""} navigation={props.navigation} />
       <Content padder style={{ flex: 1 }}>
         <Card>
           <CardItem header bordered>
@@ -68,19 +64,11 @@ const getUserInfo = async () => {
 };
 
 const mapStateToProps = state => {
-  return {
-    loginReducerInfo: state.loginReducerInfo,
-    mainDataReqReducerInfo: state.mainDataReqReducerInfo, // 메인데이터 정보
-    mainSeqChangeReducerInfo: state.mainSeqChangeReducerInfo
-  };
+  return {};
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    reqMainDataHandler: mainSeq => {
-      dispatch(requestMainData(mainSeq));
-    }
-  };
+  return {};
 };
 
 export default connect(
