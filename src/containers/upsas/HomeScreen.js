@@ -7,12 +7,19 @@ import _ from "lodash";
 import Gauge from "../../components/Gauge";
 import PowerStatusGrid from "../../components/PowerStatusGrid";
 import WeatherCastGrid from "../../components/WeatherCastGrid";
+//action
+import { reqHomeData } from "../../actions/upsas/homeDataReqAction";
 
 const { width, height } = Dimensions.get("window"); // 장치 화면 크기
 
 const HomeScreen = props => {
-  // 메인 데이터 요청
-  useEffect(() => {}, []);
+  const { homeDataInfo } = props.homeDataReqReducerInfo;
+  const { weatherCastInfo, powerGenerationInfo, isLoading, isSuccess } = homeDataInfo;
+
+  // 메인 데이터 요청 success
+  useEffect(() => {
+    !isSuccess && props.homeDataReqHandler();
+  }, [isSuccess]);
 
   return (
     <Container style={styles.container}>
@@ -23,7 +30,7 @@ const HomeScreen = props => {
           </CardItem>
           <CardItem bordered>
             <Body>
-              <WeatherCastGrid currWeatherCastInfo={""} />
+              <WeatherCastGrid weatherCastInfo={weatherCastInfo} />
             </Body>
           </CardItem>
         </Card>
@@ -33,7 +40,7 @@ const HomeScreen = props => {
           </CardItem>
           <CardItem>
             <Body>
-              <Gauge powerGenerationInfo={""} />
+              <Gauge powerGenerationInfo={powerGenerationInfo} />
             </Body>
           </CardItem>
         </Card>
@@ -43,7 +50,7 @@ const HomeScreen = props => {
           </CardItem>
           <CardItem>
             <Body>
-              <PowerStatusGrid powerGenerationInfo={""} />
+              <PowerStatusGrid powerGenerationInfo={powerGenerationInfo} />
             </Body>
           </CardItem>
         </Card>
@@ -53,11 +60,17 @@ const HomeScreen = props => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    homeDataReqReducerInfo: state.homeDataReqReducerInfo
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    homeDataReqHandler: () => {
+      dispatch(reqHomeData());
+    }
+  };
 };
 
 export default connect(

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import Entypo from "react-native-vector-icons/Entypo";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
@@ -7,7 +8,7 @@ import { createBottomTabNavigator } from "react-navigation-tabs";
 import { Transition } from "react-native-reanimated";
 import createAnimatedSwitchNavigator from "react-navigation-animated-switch";
 // screen
-import AuthLoading from "./containers/upsas/AuthLoading";
+import AuthScreen from "./containers/upsas/AuthScreen";
 import HomeScreen from "./containers/upsas/HomeScreen";
 import LoginScreen from "./containers/upsas/LoginScreen";
 import TrendScreen from "./containers/upsas/TrendScreen";
@@ -15,21 +16,31 @@ import Header from "./components/Header";
 
 Entypo.loadFont();
 
+const siteId = 1; //FIXME:
+const siteName = "SITE NAME"; //FIXME:
+// const { siteInfo } = props.authReducerInfo;
+// const {} = siteInfo;
+
+//홈 화면
 const HomeStack = createStackNavigator(
   {
-    HomeScreen
+    HomeSreen: () => {
+      return <HomeScreen siteId={siteId} />;
+    }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
-      header: <Header />
+      header: <Header siteId={siteId} siteName={siteName} />
     }),
     initialRouteName: ""
   }
 );
-
+// 트렌드 화면
 const TrendStack = createStackNavigator(
   {
-    TrendScreen
+    TrendScreen: () => {
+      return <TrendScreen siteId={siteId} />;
+    }
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -39,8 +50,11 @@ const TrendStack = createStackNavigator(
   }
 );
 
-// 앱 메인 화면
-const AppStack = createBottomTabNavigator(
+// 로그인 화면
+const LoginStack = createStackNavigator({ LoginScreen }, { headerMode: "none" });
+
+// TODO: screen stack 수집
+const AppBottomTab = createBottomTabNavigator(
   {
     Home: HomeStack,
     Trend: TrendStack
@@ -63,19 +77,22 @@ const AppStack = createBottomTabNavigator(
   }
 );
 
-// 로그인 화면
-const AuthStack = createStackNavigator({ LoginScreen: LoginScreen }, { headerMode: "none" });
-
-// switch 적용
+// TODO:switch 적용
 const switchNavigator = createAnimatedSwitchNavigator(
   {
-    App: AppStack,
-    // AuthLoading: AuthLoading,
-    Auth: AuthStack
+    AuthScreen: AuthScreen,
+    App: AppBottomTab,
+    Login: LoginStack
   },
   {
-    initialRouteName: ""
+    initialRouteName: "AuthScreen"
   }
 );
 
-export default createAppContainer(switchNavigator);
+const mapStateToProps = state => {
+  return {
+    authReducerInfo: state.authReducer
+  };
+};
+
+export default connect(mapStateToProps)(createAppContainer(switchNavigator));

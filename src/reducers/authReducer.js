@@ -1,43 +1,42 @@
-import {AUTH_SUCCESS, AUTH_REQUEST, AUTH_FAILURE} from '../actions/actionTypes';
+import { AUTH_SUCCESS, AUTH_REQUEST, AUTH_FAILURE } from "../actions/actionTypes";
 
 const defaultState = {
-  isAuth: undefined,
-  isVisibleSpinner: false,
-  //로그인 된 사용자 정보
-  userInfo: {
-    main_seq: undefined,
-    weather_location_seq: undefined,
-    user_id: undefined,
-    name: undefined,
-    nick_name: undefined,
-    grade: undefined,
-    address: undefined,
-    tel: undefined,
-    main_uuid: undefined,
+  path: "AuthScreen",
+  isAuth: false,
+  isLoading: true,
+  siteInfo: {
+    siteId: 0,
+    siteName: ""
   },
+  userInfo: {
+    userId: "",
+    name: ""
+  }
 };
 
 const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case AUTH_REQUEST: {
       return {
-        ...state,
-        isVisibleSpinner: true,
+        ...state
       };
     }
     case AUTH_SUCCESS: {
       return {
         ...state,
+        path: "App",
         isAuth: true,
-        isVisibleSpinner: false,
-        userInfo: action.result.data,
+        isLoading: false,
+        siteInfo: action.result.data.siteId,
+        userInfo: action.result.data.userInfo
       };
     }
     case AUTH_FAILURE: {
       return {
         ...state,
+        path: "Login",
         isAuth: false,
-        isVisibleSpinner: false,
+        isLoading: false
       };
     }
     default:

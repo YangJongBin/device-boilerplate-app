@@ -9,14 +9,14 @@ import { requestChangeMainSeq } from "../actions/upsas/mainSeqChangeAction";
 
 MaterialIcon.loadFont();
 
-const customHeader = props => {
-  const { selectedPlaceName = "", siteList = [] } = props;
-  const placeNameList = _.map(siteList, "name");
+const CustomHeader = props => {
+  const { siteId, siteName } = props;
+  // const placeNameList = _.map(siteList, "name");
 
-  const changeMainSeq = (siteList, placeName) => {
-    const foundSiteInfo = _.find(siteList, { name: placeName });
-    props.mainSeqChangeReqHandler(foundSiteInfo.siteId);
-  };
+  // const changeMainSeq = (siteList, placeName) => {
+  //   const foundSiteInfo = _.find(siteList, { name: placeName });
+  //   props.mainSeqChangeReqHandler(foundSiteInfo.siteId);
+  // };
 
   return (
     <Header style={styles.header}>
@@ -33,7 +33,7 @@ const customHeader = props => {
       </Left>
       <Body>
         {/* <Text style={styles.placeNameText}>{selectedPlaceName}</Text> */}
-        <Title style={styles.placeNameText}>수중 태양광</Title>
+        <Title style={styles.placeNameText}>{siteName}</Title>
       </Body>
       <Right>
         <MaterialIcon
@@ -43,13 +43,13 @@ const customHeader = props => {
           onPress={() =>
             ActionSheet.show(
               {
-                options: placeNameList
-              },
-              buttonIndex => {
-                if (!_.isUndefined(buttonIndex)) {
-                  changeMainSeq(siteList, placeNameList[buttonIndex]);
-                }
+                options: []
               }
+              // buttonIndex => {
+              //   if (!_.isUndefined(buttonIndex)) {
+              //     changeMainSeq(siteList, placeNameList[buttonIndex]);
+              //   }
+              // }
             )
           }
         />
@@ -84,4 +84,4 @@ const mapDispatchToProps = dispatch => {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(customHeader);
+)(CustomHeader);

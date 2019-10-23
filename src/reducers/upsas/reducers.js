@@ -2,14 +2,10 @@ import { combineReducers } from "redux";
 
 import authReducer from "../authReducer";
 import loginReducer from "../loginReducer";
-import mainDataReqReducer from "./mainDataReqReducer";
-import trendDataReqReducer from "./trendDataReqReducer";
-import mainSeqChangeReducer from "./mainSeqChangeReducer";
+import homeDataReqReducer from "./homeDataReqReducer";
 
 export default combineReducers({
   authReducerInfo: authReducer,
   loginReducerInfo: loginReducer,
-  mainDataReqReducerInfo: mainDataReqReducer,
-  trendDataReqReducerInfo: trendDataReqReducer,
-  mainSeqChangeReducerInfo: mainSeqChangeReducer
+  homeDataReqReducerInfo: homeDataReqReducer
 });

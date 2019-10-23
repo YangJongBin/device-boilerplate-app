@@ -1,19 +1,17 @@
 import React, { Component } from "react";
-
 import Speedometer from "react-native-speedometer-chart";
 
 const Gauge = props => {
-  const { currKw = 0, currKwYaxisMax = 10 } = props.powerGenerationInfo;
-
+  const { currkW = 0, currkWMax = 0 } = props.powerGenerationInfo;
   return (
     <Speedometer
-      value={currKw}
-      totalValue={currKwYaxisMax}
+      value={currkW}
+      totalValue={currkWMax}
       size={250}
       outerColor="#d3d3d3"
       internalColor="#2ecc71"
       showText
-      text={currKw}
+      text={currkW}
       textStyle={{ color: "#2ecc71", fontWeight: "bold", fontSize: 40 }}
       showLabels
       labelStyle={{ color: "black" }}
@@ -22,7 +20,6 @@ const Gauge = props => {
       showIndicator={true}
       indicatorColor="gray"
     />
-    // <Speedometer value={power} totalValue={maxPower} showIndicator size={250} />
   );
 };
 

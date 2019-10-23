@@ -1,11 +1,11 @@
 import { AUTH } from "../actionTypes";
 
-export const requestAuth = () => {
+export const reqAuth = () => {
   return {
     type: AUTH,
     promise: {
       method: "post",
-      url: "http://localhost:8888/app/auth",
+      url: "http://192.168.0.154:8888/app/auth/",
       data: ""
     }
   };

@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Text, StyleSheet, AsyncStorage } from "react-native";
 import { Container, Content, Input, Form, Item, Icon, Button, Toast } from "native-base";
 //actions...
-import { requestLogin } from "../../actions/upsas/loginAction";
+import { requestLogin } from "../../actions/upsas/loginReqAction";
 
 const LoginScreen = props => {
   const { isLoggedIn } = props.loginReducerInfo; // 로그인 reduce 정보

@@ -11,7 +11,7 @@ Ionicon.loadFont();
 MaterialCommunityIcons.loadFont();
 
 const WeatherCastGrid = props => {
-  const { temp = 0, ws = 0, inclinedSolar = 0, wf = 1 } = props.currWeatherCastInfo;
+  const { temp = 0, ws = 0, inclinedSolar = 0, wf = 0 } = props.weatherCastInfo;
 
   let weahterName;
   let requireImg;

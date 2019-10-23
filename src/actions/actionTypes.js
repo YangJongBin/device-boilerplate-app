@@ -23,11 +23,11 @@ export const MENU_OPEN_REQUEST = "MENU_OPEN_REQUEST";
 export const MENU_CLOSE = "MENU_CLOSE";
 export const MENU_CLOSE_REQUEST = "MENU_CLOSE_REQUEST";
 
-// main 페이지 데이터 요청
-export const MAIN_DATA = "MAIN_DATA";
-export const MAIN_DATA_REQUEST = "MAIN_DATA_REQUEST";
-export const MAIN_DATA_SUCCESS = "MAIN_DATA_SUCCESS";
-export const MAIN_DATA_FAILURE = "MAIN_DATA_FAILURE";
+// home 페이지 데이터 요청
+export const HOME_DATA = "HOME_DATA";
+export const HOME_DATA_REQUEST = "HOME_DATA_REQUEST";
+export const HOME_DATA_SUCCESS = "HOME_DATA_SUCCESS";
+export const HOME_DATA_FAILURE = "HOME_DATA_FAILURE";
 
 // trend 페이지 데이터 요청
 export const TREND_DATA = "TREND_DATA";
