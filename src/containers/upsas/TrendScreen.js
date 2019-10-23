@@ -4,14 +4,18 @@ import { Card } from "native-base";
 import { connect } from "react-redux";
 import _ from "lodash";
 
-import test from "../../../testData";
+import { reqTrendData } from "../../actions/upsas/trendDataReqAction";
 
 import LineChart from "../../components/LineChart";
 
 const TrendScreen = props => {
-  useEffect(() => {}, []);
+  const { trendDataInfo, isSuccess, isLoading } = props.trendDataReqReducerInfo;
+  const { inverterTrendList, sensorTrendList } = trendDataInfo;
 
-  const sensorTrendList = test;
+  useEffect(() => {
+    !isSuccess && props.trendDataReqHandler();
+  }, [isSuccess]);
+
   const lineCharts = _.map(sensorTrendList, sensorTrendInfo => {
     return (
       <Card>
@@ -24,11 +28,17 @@ const TrendScreen = props => {
 };
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    trendDataReqReducerInfo: state.trendDataReqReducerInfo
+  };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    trendDataReqHandler: () => {
+      dispatch(reqTrendData());
+    }
+  };
 };
 
 export default connect(

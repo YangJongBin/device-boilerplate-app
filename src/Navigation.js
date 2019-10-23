@@ -56,8 +56,8 @@ const LoginStack = createStackNavigator({ LoginScreen }, { headerMode: "none" })
 // TODO: screen stack 수집
 const AppBottomTab = createBottomTabNavigator(
   {
-    Home: HomeStack,
-    Trend: TrendStack
+    Trend: TrendStack,
+    Home: HomeStack
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
