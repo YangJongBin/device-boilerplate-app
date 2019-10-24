@@ -7,22 +7,25 @@ import _ from "lodash";
 import Gauge from "../../components/Gauge";
 import PowerStatusGrid from "../../components/PowerStatusGrid";
 import WeatherCastGrid from "../../components/WeatherCastGrid";
+import Header from "../../components/Header";
 //action
 import { reqHomeData } from "../../actions/upsas/homeDataReqAction";
 
 const { width, height } = Dimensions.get("window"); // 장치 화면 크기
 
 const HomeScreen = props => {
-  const { homeDataInfo } = props.homeDataReqReducerInfo;
-  const { weatherCastInfo, powerGenerationInfo, isLoading, isSuccess } = homeDataInfo;
+  const { homeDataInfo, isLoading } = props.homeDataReqReducerInfo;
+  const { siteId } = props.siteIdSaveReducerInfo;
+  const { weatherCastInfo, powerGenerationInfo } = homeDataInfo;
 
   // 메인 데이터 요청 success
   useEffect(() => {
-    !isSuccess && props.homeDataReqHandler();
-  }, [isSuccess]);
+    props.homeDataReqHandler(siteId);
+  }, [siteId]);
 
   return (
     <Container style={styles.container}>
+      <Header></Header>
       <Content>
         <Card>
           <CardItem header bordered>
@@ -61,14 +64,15 @@ const HomeScreen = props => {
 
 const mapStateToProps = state => {
   return {
-    homeDataReqReducerInfo: state.homeDataReqReducerInfo
+    homeDataReqReducerInfo: state.homeDataReqReducerInfo,
+    siteIdSaveReducerInfo: state.siteIdSaveReducerInfo
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    homeDataReqHandler: () => {
-      dispatch(reqHomeData());
+    homeDataReqHandler: siteId => {
+      dispatch(reqHomeData(siteId));
     }
   };
 };

@@ -3,34 +3,9 @@ import { TREND_DATA_FAILURE, TREND_DATA_REQUEST, TREND_DATA_SUCCESS } from "../.
 const defaultState = {
   trendDataInfo: {
     inverterTrendList: [],
-    sensorTrendList: [
-      {
-        domId: "",
-        title: "",
-        subtitle: "",
-        yAxis: [
-          {
-            yTitle: "",
-            dataUnit: ""
-          }
-        ],
-        plotSeries: {
-          pointStart: 0,
-          pointInterval: 0
-        },
-        series: [
-          {
-            name: "",
-            color: "",
-            tooltop: { valueSuffix: "" },
-            data: [null, null]
-          }
-        ]
-      }
-    ]
+    sensorTrendList: []
   },
-  isLoading: true,
-  isSuccess: false
+  isLoading: true
 };
 
 const trendDataReqReducer = (state = defaultState, action) => {
@@ -43,14 +18,12 @@ const trendDataReqReducer = (state = defaultState, action) => {
       return {
         ...state,
         isLoading: false,
-        isSuccess: true,
         trendDataInfo: action.result.data
       };
     case TREND_DATA_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        isSuccess: false
+        isLoading: false
       };
     default:
       return state;

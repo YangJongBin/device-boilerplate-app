@@ -4,13 +4,15 @@ const defaultState = {
   path: "AuthScreen",
   isAuth: false,
   isLoading: true,
-  siteInfo: {
-    siteId: 0,
-    siteName: ""
-  },
   userInfo: {
     userId: "",
-    name: ""
+    name: "",
+    siteList: [
+      {
+        siteId: "",
+        siteName: ""
+      }
+    ]
   }
 };
 
@@ -27,7 +29,7 @@ const authReducer = (state = defaultState, action) => {
         path: "App",
         isAuth: true,
         isLoading: false,
-        siteInfo: action.result.data.siteId,
+        siteList: action.result.data.siteList,
         userInfo: action.result.data.userInfo
       };
     }

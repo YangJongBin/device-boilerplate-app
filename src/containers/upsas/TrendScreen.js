@@ -1,20 +1,23 @@
 import React, { Component, useEffect } from "react";
 import { Text, StyleSheet, View, ScrollView } from "react-native";
-import { Card } from "native-base";
+import { Card, Container, Content } from "native-base";
 import { connect } from "react-redux";
 import _ from "lodash";
+//compoents
+import Header from "../../components/Header";
 
 import { reqTrendData } from "../../actions/upsas/trendDataReqAction";
 
 import LineChart from "../../components/LineChart";
 
 const TrendScreen = props => {
-  const { trendDataInfo, isSuccess, isLoading } = props.trendDataReqReducerInfo;
-  const { inverterTrendList, sensorTrendList } = trendDataInfo;
+  const { trendDataInfo, isLoading } = props.trendDataReqReducerInfo;
+  const { siteId } = props.siteIdSaveReducerInfo;
+  const { sensorTrendList } = trendDataInfo;
 
   useEffect(() => {
-    !isSuccess && props.trendDataReqHandler();
-  }, [isSuccess]);
+    props.trendDataReqHandler(siteId);
+  }, [siteId]);
 
   const lineCharts = _.map(sensorTrendList, sensorTrendInfo => {
     return (
@@ -24,19 +27,27 @@ const TrendScreen = props => {
     );
   });
 
-  return <ScrollView>{lineCharts}</ScrollView>;
+  return (
+    <Container>
+      <Header></Header>
+      <Content>
+        <ScrollView style={{ backgroundColor: "red" }}>{lineCharts}</ScrollView>
+      </Content>
+    </Container>
+  );
 };
 
 const mapStateToProps = state => {
   return {
-    trendDataReqReducerInfo: state.trendDataReqReducerInfo
+    trendDataReqReducerInfo: state.trendDataReqReducerInfo,
+    siteIdSaveReducerInfo: state.siteIdSaveReducerInfo
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    trendDataReqHandler: () => {
-      dispatch(reqTrendData());
+    trendDataReqHandler: siteId => {
+      dispatch(reqTrendData(siteId));
     }
   };
 };

@@ -1,82 +1,62 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Text, StyleSheet, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
-import { Header, Body, Container, Right, ActionSheet, Title, Left } from "native-base";
+import { Header, Body, Right, ActionSheet, Title, Left } from "native-base";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
 import _ from "lodash";
-
-import { requestChangeMainSeq } from "../actions/upsas/mainSeqChangeAction";
+import PickerSelect from "react-native-picker-select";
+//actions
+import { saveSiteId } from "../actions/upsas/siteIdSaveAction";
 
 MaterialIcon.loadFont();
 
 const CustomHeader = props => {
-  const { siteId, siteName } = props;
-  // const placeNameList = _.map(siteList, "name");
+  const { userInfo } = props.authReducerInfo;
+  const [selected, setSelected] = useState(0);
+  const items = _.map(userInfo.siteList, siteInfo => {
+    return {
+      label: siteInfo.siteName,
+      value: siteInfo.siteId
+    };
+  });
 
-  // const changeMainSeq = (siteList, placeName) => {
-  //   const foundSiteInfo = _.find(siteList, { name: placeName });
-  //   props.mainSeqChangeReqHandler(foundSiteInfo.siteId);
-  // };
+  AsyncStorage.getItem("siteId", (err, result) => {
+    setSelected(result);
+  });
 
   return (
     <Header style={styles.header}>
-      <Left>
-        {/* <Icon
-          name="logout"
-          size={30}
-          coloe="black"
-          onPress={() => {
-            AsyncStorage.clear();
-            props.navigation.navigate("Auth");
-          }}
-        /> */}
-      </Left>
+      <Left></Left>
       <Body>
-        {/* <Text style={styles.placeNameText}>{selectedPlaceName}</Text> */}
-        <Title style={styles.placeNameText}>{siteName}</Title>
+        <PickerSelect
+          value={selected}
+          placeholder
+          onValueChange={value => {
+            setSelected(value);
+            props.siteIdSaveHandler(value);
+            AsyncStorage.setItem("siteId", value);
+          }}
+          items={items}
+        ></PickerSelect>
       </Body>
-      <Right>
-        <MaterialIcon
-          name="place"
-          size={30}
-          color="black"
-          onPress={() =>
-            ActionSheet.show(
-              {
-                options: []
-              }
-              // buttonIndex => {
-              //   if (!_.isUndefined(buttonIndex)) {
-              //     changeMainSeq(siteList, placeNameList[buttonIndex]);
-              //   }
-              // }
-            )
-          }
-        />
-      </Right>
+      <Right></Right>
     </Header>
   );
 };
 
-const styles = StyleSheet.create({
-  // header: {
-  //   backgroundColor: "#2f3640"
-  // },
-  // headerText: {
-  //   fontWeight: "bold",
-  //   color: "white",
-  //   fontSize: 20
-  // }
-});
+const styles = StyleSheet.create({});
 
 const mapStateToProps = state => {
-  return {};
+  return {
+    siteIdSaveReducerInfo: state.siteIdSaveReducerInfo,
+    authReducerInfo: state.authReducerInfo
+  };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    mainSeqChangeReqHandler: selectedMainSeq => {
-      dispatch(requestChangeMainSeq(selectedMainSeq));
+    siteIdSaveHandler: siteId => {
+      dispatch(saveSiteId(siteId));
     }
   };
 };

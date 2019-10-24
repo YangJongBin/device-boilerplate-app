@@ -1,11 +1,11 @@
 import { TREND_DATA } from "../actionTypes";
 
-export const reqTrendData = () => {
+export const reqTrendData = siteId => {
   return {
     type: TREND_DATA,
     promise: {
       method: "get",
-      url: "http://192.168.0.154:8888/app/trend/",
+      url: `http://192.168.0.154:8888/app/trend/${siteId}`,
       data: ""
     }
   };

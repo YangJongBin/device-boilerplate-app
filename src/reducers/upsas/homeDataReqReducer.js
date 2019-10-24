@@ -18,8 +18,7 @@ const defaultState = {
       comulativePower: 0 // 누적 발전량
     }
   },
-  isLoading: true, // 로딩 화면 상태
-  isSuccess: false
+  isLoading: true // 로딩 화면 상태
 };
 
 const mainDataReqReducer = (state = defaultState, action) => {
@@ -32,14 +31,12 @@ const mainDataReqReducer = (state = defaultState, action) => {
       return {
         ...state,
         isLoading: false,
-        isSuccess: true,
         homeDataInfo: action.result.data
       };
     case HOME_DATA_FAILURE:
       return {
         ...state,
-        isLoading: false,
-        isSuccess: false
+        isLoading: false
       };
     default:
       return state;
