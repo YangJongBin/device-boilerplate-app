@@ -5,7 +5,7 @@ export const reqTrendData = siteId => {
     type: TREND_DATA,
     promise: {
       method: "get",
-      url: `http://192.168.0.154:8888/app/trend/${siteId}`,
+      url: `http://smapi.mynetgear.com:15401/app/trend/${siteId}`,
       data: ""
     }
   };

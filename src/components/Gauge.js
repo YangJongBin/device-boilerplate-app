@@ -3,6 +3,7 @@ import Speedometer from "react-native-speedometer-chart";
 
 const Gauge = props => {
   const { currkW = 0, currkWMax = 0 } = props.powerGenerationInfo;
+
   return (
     <Speedometer
       value={currkW}

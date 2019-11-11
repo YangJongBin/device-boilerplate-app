@@ -161,7 +161,6 @@
 				9766798A5BA69E0CFE93E533 /* Pods-device_boilerplate_appTests.debug.xcconfig */,
 				67D5053EF42D605FE19C1468 /* Pods-device_boilerplate_appTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -309,6 +308,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);

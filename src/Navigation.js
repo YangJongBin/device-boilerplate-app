@@ -10,14 +10,19 @@ import AuthScreen from "./containers/upsas/AuthScreen";
 import HomeScreen from "./containers/upsas/HomeScreen";
 import LoginScreen from "./containers/upsas/LoginScreen";
 import TrendScreen from "./containers/upsas/TrendScreen";
+import JoinScreen from "./containers/upsas/JoinScreen";
+import ReportScreen from "./containers/upsas/ReportScreen";
+import DiaryScreen from "./containers/upsas/DiaryScreen";
 
 Entypo.loadFont();
 
 // 로그인 화면
-const LoginStack = createStackNavigator({ LoginScreen }, { headerMode: "none" });
+// const LoginStack = createStackNavigator({ LoginScreen }, { headerMode: "none" });
 
 const AppBottomTab = createBottomTabNavigator(
   {
+    Diary: DiaryScreen,
+    Report: ReportScreen,
     Home: HomeScreen,
     Trend: TrendScreen
   },
@@ -32,6 +37,10 @@ const AppBottomTab = createBottomTabNavigator(
           iconName = "home";
         } else if (routeName === "Trend") {
           iconName = "line-graph";
+        } else if (routeName === "Report") {
+          iconName = "text-document";
+        } else if (routeName === "Diary") {
+          iconName = "calendar";
         }
         return <Entypo name={iconName} size={25} coloe={tintColor} />;
       }
@@ -39,11 +48,21 @@ const AppBottomTab = createBottomTabNavigator(
   }
 );
 
+const LoginSwitch = createAnimatedSwitchNavigator(
+  {
+    JoinScreen,
+    LoginScreen
+  },
+  {
+    headerMode: "none"
+  }
+);
+
 const switchNavigator = createAnimatedSwitchNavigator(
   {
     AuthScreen: AuthScreen,
-    App: AppBottomTab,
-    Login: LoginStack
+    Login: LoginSwitch,
+    App: AppBottomTab
   },
   {
     initialRouteName: "AuthScreen"

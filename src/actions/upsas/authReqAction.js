@@ -5,7 +5,8 @@ export const reqAuth = () => {
     type: AUTH,
     promise: {
       method: "post",
-      url: "http://192.168.0.154:8888/app/auth/",
+      // url: "http://smapi.mynetgear.com:15401/app/auth/",
+      url: "http://smapi.mynetgear.com:15401/app/auth/",
       data: ""
     }
   };

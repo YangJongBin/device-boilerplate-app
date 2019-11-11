@@ -9,17 +9,17 @@ const LoginScreen = props => {
   const { isLoggedIn } = props.loginReducerInfo; // 로그인 reduce 정보
 
   // 로그인 성공 유무에 대한 이벤트
-  useEffect(() => {
-    // FIXME: 로그인 실패 메세지 수정
-    if (isLoggedIn) {
-      props.navigation.navigate("App");
-    } else if (isLoggedIn === false) {
-      Toast.show({
-        type: "danger",
-        text: "로그인 실패"
-      });
-    }
-  }, [isLoggedIn]);
+  // useEffect(() => {
+  //   // FIXME: 로그인 실패 메세지 수정
+  //   if (isLoggedIn) {
+  //     props.navigation.navigate("App");
+  //   } else if (isLoggedIn === false) {
+  //     Toast.show({
+  //       type: "danger",
+  //       text: "로그인 실패"
+  //     });
+  //   }
+  // }, [isLoggedIn]);
 
   // component
   return (
@@ -55,6 +55,14 @@ const LoginScreen = props => {
         >
           <Text style={styles.loginText}> LOGIN </Text>
         </Button>
+        <Text
+          onPress={() => {
+            // TODO:
+            props.navigation.navigate("JoinScreen");
+          }}
+        >
+          sign up
+        </Text>
       </Form>
     </Container>
   );

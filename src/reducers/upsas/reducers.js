@@ -4,6 +4,7 @@ import authReducer from "../authReducer";
 import loginReducer from "../loginReducer";
 import homeDataReqReducer from "./homeDataReqReducer";
 import trendDataReqReducer from "./trendDataReqReducer";
+import reportDataReqReducer from "./reportDataReqReducer";
 import siteIdSaveReducer from "./siteIdSaveReducer";
 
 export default combineReducers({
@@ -11,5 +12,6 @@ export default combineReducers({
   loginReducerInfo: loginReducer,
   homeDataReqReducerInfo: homeDataReqReducer,
   trendDataReqReducerInfo: trendDataReqReducer,
+  reportDataReqReducerInfo: reportDataReqReducer,
   siteIdSaveReducerInfo: siteIdSaveReducer
 });
