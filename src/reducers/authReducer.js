@@ -2,7 +2,6 @@ import { AUTH_SUCCESS, AUTH_REQUEST, AUTH_FAILURE } from "../actions/actionTypes
 
 const defaultState = {
   path: "AuthScreen",
-  isAuth: false,
   isLoading: true,
   userInfo: {
     userId: "",
@@ -27,7 +26,6 @@ const authReducer = (state = defaultState, action) => {
       return {
         ...state,
         path: "App",
-        isAuth: true,
         isLoading: false,
         siteList: action.result.data.siteList,
         userInfo: action.result.data.userInfo
@@ -37,7 +35,6 @@ const authReducer = (state = defaultState, action) => {
       return {
         ...state,
         path: "Login",
-        isAuth: false,
         isLoading: false
       };
     }

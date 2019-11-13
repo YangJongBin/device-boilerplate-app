@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import { Text, StyleSheet, View, Image } from "react-native";
 import { connect } from "react-redux";
 import { Card, CardItem, Grid, Col, Row } from "native-base";
-import Fontisto from "react-native-vector-icons/Fontisto";
-import Ionicon from "react-native-vector-icons/Ionicons";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontistoIcon from "react-native-vector-icons/Fontisto";
+import IonIcon from "react-native-vector-icons/Ionicons";
+import MaterialCommunityIcon from "react-native-vector-icons/MaterialCommunityIcons";
 
-Fontisto.loadFont();
-Ionicon.loadFont();
-MaterialCommunityIcons.loadFont();
+FontistoIcon.loadFont();
+IonIcon.loadFont();
+MaterialCommunityIcon.loadFont();
 
 const WeatherCastGrid = props => {
   const { temp = 0, ws = 0, inclinedSolar = 0, wf = 0 } = props.weatherCastInfo;
@@ -64,13 +64,13 @@ const WeatherCastGrid = props => {
       </Col>
       <Col>
         <Row style={styles.iconArea}>
-          <Ionicon style={styles.icon} name="md-sunny" size={25} color="#f9c04c" />
+          <IonIcon style={styles.icon} name="md-sunny" size={25} color="#f9c04c" />
         </Row>
         <Row style={styles.iconArea}>
-          <Fontisto style={styles.icon} name="wind" size={20} color="#87d5e7" />
+          <FontistoIcon style={styles.icon} name="wind" size={20} color="#87d5e7" />
         </Row>
         <Row style={styles.iconArea}>
-          <MaterialCommunityIcons style={styles.icon} name="temperature-celsius" size={20} color="#ee5841" />
+          <MaterialCommunityIcon style={styles.icon} name="temperature-celsius" size={20} color="#ee5841" />
         </Row>
       </Col>
       <Col>

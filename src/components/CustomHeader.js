@@ -1,39 +1,40 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState, useEffect } from "react";
 import { Text, StyleSheet, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
-import { Header, Body, Right, ActionSheet, Title, Left } from "native-base";
+import { Header, Body, Right, Left, Thumbnail } from "native-base";
 import MaterialIcon from "react-native-vector-icons/MaterialIcons";
-import _ from "lodash";
 import PickerSelect from "react-native-picker-select";
-//actions
-import { saveSiteId } from "../actions/upsas/siteIdSaveAction";
+import _ from "lodash";
 
+// icon load
 MaterialIcon.loadFont();
 
 const CustomHeader = props => {
-  const { userInfo } = props.authReducerInfo;
-  const [selected, setSelected] = useState(0);
-  const items = _.map(userInfo.siteList, siteInfo => {
+  const { siteId, siteList } = props;
+  const [selected, setSelected] = useState(0); // state로 관리하지 않으면 pick이 되지않음.
+  //
+  const items = _.map(siteList, siteInfo => {
     return {
       label: siteInfo.siteName,
       value: siteInfo.siteId
     };
   });
 
-  AsyncStorage.getItem("siteId", (err, result) => {
-    setSelected(result);
-  });
+  useEffect(() => {
+    setSelected(siteId);
+  }, [siteId]);
 
   return (
     <Header style={styles.header}>
-      <Left></Left>
+      <Left>
+        <Thumbnail small square source={require("../../img/fp_logo.png")}></Thumbnail>
+      </Left>
       <Body>
         <PickerSelect
           value={selected}
           placeholder
           onValueChange={value => {
             setSelected(value);
-            props.siteIdSaveHandler(value);
             AsyncStorage.setItem("siteId", value);
           }}
           items={items}
@@ -48,17 +49,12 @@ const styles = StyleSheet.create({});
 
 const mapStateToProps = state => {
   return {
-    siteIdSaveReducerInfo: state.siteIdSaveReducerInfo,
-    authReducerInfo: state.authReducerInfo
+    siteIdSaveReducerInfo: state.siteIdSaveReducerInfo
   };
 };
 
 const mapDispatchToProps = dispatch => {
-  return {
-    siteIdSaveHandler: siteId => {
-      dispatch(saveSiteId(siteId));
-    }
-  };
+  return {};
 };
 
 export default connect(

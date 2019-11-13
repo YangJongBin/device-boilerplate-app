@@ -1,31 +1,34 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Text, StyleSheet, Dimensions } from "react-native";
+import { Text, StyleSheet, Dimensions, AsyncStorage } from "react-native";
 import { Container, Content, Card, CardItem, Body } from "native-base";
 import _ from "lodash";
-//components
+//component
 import Gauge from "../../components/Gauge";
 import PowerStatusGrid from "../../components/PowerStatusGrid";
 import WeatherCastGrid from "../../components/WeatherCastGrid";
-import Header from "../../components/Header";
+import CustomHeader from "../../components/CustomHeader";
 //action
-import { reqHomeData } from "../../actions/upsas/homeDataReqAction";
-
-const { width, height } = Dimensions.get("window"); // 장치 화면 크기
+import { reqHomeData, saveSiteId } from "../../actions/upsas/homeAction";
 
 const HomeScreen = props => {
-  const { homeDataInfo, isLoading } = props.homeDataReqReducerInfo;
-  const { siteId } = props.siteIdSaveReducerInfo;
+  const { homeReducerInfo, authReducerInfo, siteIdSaveReducerInfo } = props;
+  // home 응답 데이터
+  const { homeDataInfo } = homeReducerInfo; // reducer 정보
   const { weatherCastInfo, powerGenerationInfo } = homeDataInfo;
+  // auth 응답 데이터
+  const { userInfo } = authReducerInfo;
+  const { siteList } = userInfo;
+  const { siteId } = siteIdSaveReducerInfo; // 선택된 장소 id
 
-  // 메인 데이터 요청 success
+  // 메인 데이터 요청
   useEffect(() => {
     props.homeDataReqHandler(siteId);
   }, [siteId]);
 
   return (
     <Container style={styles.container}>
-      <Header></Header>
+      <CustomHeader siteId={siteId} siteList={siteList}></CustomHeader>
       <Content>
         <Card>
           <CardItem header bordered>
@@ -64,7 +67,8 @@ const HomeScreen = props => {
 
 const mapStateToProps = state => {
   return {
-    homeDataReqReducerInfo: state.homeDataReqReducerInfo,
+    homeReducerInfo: state.homeReducerInfo,
+    authReducerInfo: state.authReducerInfo,
     siteIdSaveReducerInfo: state.siteIdSaveReducerInfo
   };
 };
@@ -84,8 +88,6 @@ export default connect(
 
 const styles = StyleSheet.create({
   container: {
-    // width: width,
-    // height: height,
     backgroundColor: "red" //FIXME: 삭제
   }
 });

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { restElement } from "@babel/types";
 
 export default () => {
   return next => action => {

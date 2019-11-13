@@ -1,29 +1,32 @@
 import React, { Component } from "react";
-import Entypo from "react-native-vector-icons/Entypo";
 import { createAppContainer } from "react-navigation";
-import { createStackNavigator } from "react-navigation-stack";
 import { createBottomTabNavigator } from "react-navigation-tabs";
-import { Transition } from "react-native-reanimated";
+import { createStackNavigator } from "react-navigation-stack";
+import EntypoIncon from "react-native-vector-icons/Entypo";
 import createAnimatedSwitchNavigator from "react-navigation-animated-switch";
 // screen
 import AuthScreen from "./containers/upsas/AuthScreen";
 import HomeScreen from "./containers/upsas/HomeScreen";
 import LoginScreen from "./containers/upsas/LoginScreen";
 import TrendScreen from "./containers/upsas/TrendScreen";
-import JoinScreen from "./containers/upsas/JoinScreen";
 import ReportScreen from "./containers/upsas/ReportScreen";
 import DiaryScreen from "./containers/upsas/DiaryScreen";
+//componet
+import DiaryStackView from "./components/DiaryStackView";
 
-Entypo.loadFont();
+// icon load
+EntypoIncon.loadFont();
 
-// 로그인 화면
-// const LoginStack = createStackNavigator({ LoginScreen }, { headerMode: "none" });
+const test = value => {
+  alert(value);
+};
 
-const AppBottomTab = createBottomTabNavigator(
+// app 아래 탭 메뉴 세팅
+const BottomTabNavigator = createBottomTabNavigator(
   {
     Diary: DiaryScreen,
-    Report: ReportScreen,
     Home: HomeScreen,
+    Report: ReportScreen,
     Trend: TrendScreen
   },
   {
@@ -42,31 +45,40 @@ const AppBottomTab = createBottomTabNavigator(
         } else if (routeName === "Diary") {
           iconName = "calendar";
         }
-        return <Entypo name={iconName} size={25} coloe={tintColor} />;
+        return <EntypoIncon name={iconName} size={25} coloe={tintColor} />;
       }
     })
   }
 );
 
-const LoginSwitch = createAnimatedSwitchNavigator(
+//FIXME: 네이밍 조금 이상..
+const StackNavigator = createStackNavigator(
   {
-    JoinScreen,
-    LoginScreen
+    App: BottomTabNavigator,
+    DiaryMemoView: props => (
+      <DiaryStackView
+        {...props}
+        selectedMemo={props.navigation.state.params}
+      ></DiaryStackView>
+    )
   },
   {
-    headerMode: "none"
+    headerMode: "none",
+    mode: "modal"
   }
 );
 
-const switchNavigator = createAnimatedSwitchNavigator(
+// 모든 페이지 스위치 스택
+const SwitchNavigator = createAnimatedSwitchNavigator(
   {
     AuthScreen: AuthScreen,
-    Login: LoginSwitch,
-    App: AppBottomTab
+    Login: LoginScreen,
+    App: StackNavigator
+    // App: AppBottomTab
   },
   {
     initialRouteName: "AuthScreen"
   }
 );
 
-export default createAppContainer(switchNavigator);
+export default createAppContainer(SwitchNavigator);

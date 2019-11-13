@@ -1,28 +1,35 @@
-import React, { Component, useEffect } from "react";
+import _ from "lodash";
+import React, { useEffect } from "react";
 import { StyleSheet, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
+import { Spinner, Container, Content } from "native-base";
+//component
 import OverSpinner from "react-native-loading-spinner-overlay";
-import _ from "lodash";
 //actions
-import { reqAuth } from "../../actions/upsas/authReqAction";
-import { saveSiteId } from "../../actions/upsas/siteIdSaveAction";
+import { reqAuth } from "../../actions/upsas/authAction";
 
 const AuthScreen = props => {
-  const { isAuth, isLoading, path } = props.authReducerInfo;
+  const { isLoading, path } = props.authReducerInfo; // 인증 reducer 정보
 
-  AsyncStorage.getItem("siteId", (err, result) => {
-    props.siteIdSaveHandler(result);
-  });
-
+  // 인증 요청
   useEffect(() => {
-    // 인증 요청
-    !isAuth && props.authReqHandler();
+    props.authReqHandler();
+  }, []);
 
-    // 페이지 이동
+  // 인증 결과에 따라 페이지 이동
+  useEffect(() => {
     props.navigation.navigate(path);
-  }, [isAuth]);
+    path === "Login" && AsyncStorage.clear(); // 로그인 페이지로 이동시 asnycStorage 초기화
+  }, [path]);
 
-  return <OverSpinner textContent="Loading..." textStyle={{ color: "white" }} visible={isLoading} />;
+  return (
+    <Container>
+      <Content>
+        <Spinner></Spinner>
+      </Content>
+    </Container>
+  );
+  // return <OverSpinner textContent="Loading..." textStyle={{ color: "white" }} visible={isLoading} />;
 };
 
 const mapStateToProps = state => {
@@ -35,9 +42,6 @@ const mapDispathToProps = dispatch => {
   return {
     authReqHandler: () => {
       dispatch(reqAuth());
-    },
-    siteIdSaveHandler: siteId => {
-      dispatch(saveSiteId(siteId));
     }
   };
 };

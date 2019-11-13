@@ -1,7 +1,7 @@
 import { SAVE_SITEID_REQUEST, SAVE_SITEID_SUCCESS, SAVE_SITEID_FAILURE } from "../../actions/actionTypes";
 
 const defaultState = {
-  siteId: 0
+  siteId: ""
 };
 
 const siteIdSaveReducer = (state = defaultState, action) => {

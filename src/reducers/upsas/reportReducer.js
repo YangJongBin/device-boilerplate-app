@@ -8,7 +8,7 @@ const defaultState = {
   isLading: true
 };
 
-const reportDataReqReducer = (state = defaultState, action) => {
+const reportReducer = (state = defaultState, action) => {
   switch (action.type) {
     case REPORT_DATA_REQUEST:
       return {
@@ -31,4 +31,4 @@ const reportDataReqReducer = (state = defaultState, action) => {
   }
 };
 
-export default reportDataReqReducer;
+export default reportReducer;

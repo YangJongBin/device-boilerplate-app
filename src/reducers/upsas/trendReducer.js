@@ -8,7 +8,7 @@ const defaultState = {
   isLoading: true
 };
 
-const trendDataReqReducer = (state = defaultState, action) => {
+const trendReducer = (state = defaultState, action) => {
   switch (action.type) {
     case TREND_DATA_REQUEST:
       return {
@@ -30,4 +30,4 @@ const trendDataReqReducer = (state = defaultState, action) => {
   }
 };
 
-export default trendDataReqReducer;
+export default trendReducer;

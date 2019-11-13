@@ -2,16 +2,18 @@ import { combineReducers } from "redux";
 
 import authReducer from "../authReducer";
 import loginReducer from "../loginReducer";
-import homeDataReqReducer from "./homeDataReqReducer";
-import trendDataReqReducer from "./trendDataReqReducer";
-import reportDataReqReducer from "./reportDataReqReducer";
+import homeReducer from "./homeReducer";
+import trendReducer from "./trendReducer";
+import reportReducer from "./reportReducer";
+import diaryReducer from "./diaryReducer";
 import siteIdSaveReducer from "./siteIdSaveReducer";
 
 export default combineReducers({
   authReducerInfo: authReducer,
   loginReducerInfo: loginReducer,
-  homeDataReqReducerInfo: homeDataReqReducer,
-  trendDataReqReducerInfo: trendDataReqReducer,
-  reportDataReqReducerInfo: reportDataReqReducer,
+  homeReducerInfo: homeReducer,
+  trendReducerInfo: trendReducer,
+  reportReducerInfo: reportReducer,
+  diaryReducerInfo: diaryReducer,
   siteIdSaveReducerInfo: siteIdSaveReducer
 });

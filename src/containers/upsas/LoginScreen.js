@@ -3,7 +3,7 @@ import { connect } from "react-redux";
 import { Text, StyleSheet, AsyncStorage } from "react-native";
 import { Container, Content, Input, Form, Item, Icon, Button, Toast } from "native-base";
 //actions...
-import { requestLogin } from "../../actions/upsas/loginReqAction";
+import { reqLogin } from "../../actions/upsas/authAction";
 
 const LoginScreen = props => {
   const { isLoggedIn } = props.loginReducerInfo; // 로그인 reduce 정보
@@ -21,7 +21,6 @@ const LoginScreen = props => {
   //   }
   // }, [isLoggedIn]);
 
-  // component
   return (
     <Container style={styles.container}>
       <Form style={styles.loginForm}>
@@ -57,7 +56,7 @@ const LoginScreen = props => {
         </Button>
         <Text
           onPress={() => {
-            // TODO:
+            // FIXME:
             props.navigation.navigate("JoinScreen");
           }}
         >
@@ -77,7 +76,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     loginHandler: (id, pw) => {
-      dispatch(requestLogin(id, pw));
+      dispatch(reqLogin(id, pw));
     }
   };
 };

@@ -21,7 +21,7 @@ const defaultState = {
   isLoading: true // 로딩 화면 상태
 };
 
-const mainDataReqReducer = (state = defaultState, action) => {
+const homeReducer = (state = defaultState, action) => {
   switch (action.type) {
     case HOME_DATA_REQUEST:
       return {
@@ -43,4 +43,4 @@ const mainDataReqReducer = (state = defaultState, action) => {
   }
 };
 
-export default mainDataReqReducer;
+export default homeReducer;
