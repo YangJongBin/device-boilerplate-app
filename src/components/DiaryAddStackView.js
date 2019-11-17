@@ -8,19 +8,19 @@ import {
   Right,
   Left,
   Body,
-  Button,
-  Footer
+  Button
 } from "native-base";
+import moment from "moment";
 import EntypoIcon from "react-native-vector-icons/Entypo";
+
 //action
-import { saveDiaryInfo, deleteDiaryInfo } from "../actions/upsas/diaryAction";
+import { saveDiaryInfo } from "../actions/upsas/diaryAction";
 
 EntypoIcon.loadFont();
 
 // TODO:
 const DiaryMemoView = props => {
-  const { seq, writedate, content } = props.selectedDiaryInfo;
-  const [stateContent, setStateContent] = useState(content);
+  const [stateContent, setStateContent] = useState("");
 
   const setDownButton = () => (
     <Button
@@ -33,11 +33,11 @@ const DiaryMemoView = props => {
     </Button>
   );
 
-  const setSaveButton = (seq, writedate, content) => (
+  const setSaveButton = (writedate, content) => (
     <Button
       transparent
       onPress={() => {
-        props.diarySaveHandler({ seq, writedate, content });
+        props.diarySaveHandler({ writedate, content });
         props.navigation.goBack();
       }}
     >
@@ -49,37 +49,24 @@ const DiaryMemoView = props => {
     <Container>
       <Header>
         <Body>
-          <Text>{writedate}</Text>
+          <Text>{moment().format("YYYY-MM-DD")}</Text>
         </Body>
         <Right>
-          {stateContent == content
+          {stateContent == ""
             ? setDownButton()
-            : setSaveButton(seq, writedate, stateContent)}
+            : setSaveButton(moment().format("YYYY-MM-DD"), stateContent)}
         </Right>
       </Header>
       <Content padder>
         <TextInput
           multiline={true}
-          value={stateContent}
+          placeholder="여기에 내용을 적어주세요."
           multiline={true}
           onChangeText={value => {
             setStateContent(value);
           }}
         ></TextInput>
       </Content>
-      <Footer style={{ backgroundColor: "transparent" }}>
-        <Right>
-          <Button
-            transparent
-            onPress={() => {
-              props.diaryDeleteHandler({ seq, writedate, connect });
-              props.navigation.goBack();
-            }}
-          >
-            <EntypoIcon name="trash"></EntypoIcon>
-          </Button>
-        </Right>
-      </Footer>
     </Container>
   );
 };
@@ -94,9 +81,6 @@ const mapDispatchToProps = dispatch => {
   return {
     diarySaveHandler: diaryInfo => {
       dispatch(saveDiaryInfo(diaryInfo));
-    },
-    diaryDeleteHandler: diaryInfo => {
-      dispatch(deleteDiaryInfo(diaryInfo));
     }
   };
 };

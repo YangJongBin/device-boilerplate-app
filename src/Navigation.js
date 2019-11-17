@@ -13,21 +13,18 @@ import ReportScreen from "./containers/upsas/ReportScreen";
 import DiaryScreen from "./containers/upsas/DiaryScreen";
 //componet
 import DiaryStackView from "./components/DiaryStackView";
+import DiaryAddStackView from "./components/DiaryAddStackView";
 
 // icon load
 EntypoIncon.loadFont();
 
-const test = value => {
-  alert(value);
-};
-
 // app 아래 탭 메뉴 세팅
 const BottomTabNavigator = createBottomTabNavigator(
   {
-    Diary: DiaryScreen,
     Home: HomeScreen,
-    Report: ReportScreen,
-    Trend: TrendScreen
+    Trend: TrendScreen,
+    Diary: DiaryScreen
+    // Report: ReportScreen,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -55,12 +52,13 @@ const BottomTabNavigator = createBottomTabNavigator(
 const StackNavigator = createStackNavigator(
   {
     App: BottomTabNavigator,
-    DiaryMemoView: props => (
+    DiaryStackView: props => (
       <DiaryStackView
         {...props}
-        selectedMemo={props.navigation.state.params}
+        selectedDiaryInfo={props.navigation.state.params}
       ></DiaryStackView>
-    )
+    ),
+    DiaryAddStackView: DiaryAddStackView
   },
   {
     headerMode: "none",

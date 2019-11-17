@@ -1,4 +1,8 @@
-import { SAVE_SITEID_REQUEST, SAVE_SITEID_SUCCESS, SAVE_SITEID_FAILURE } from "../../actions/actionTypes";
+import {
+  SAVE_SITEID_REQUEST,
+  SAVE_SITEID_SUCCESS,
+  SAVE_SITEID_FAILURE
+} from "../../actions/actionTypes";
 
 const defaultState = {
   siteId: ""
@@ -10,7 +14,7 @@ const siteIdSaveReducer = (state = defaultState, action) => {
     //   return {
     //     ...state
     //   };
-    case SAVE_SITEID_SUCCESS:
+    case SAVE_SITEID_REQUEST:
       return {
         ...state,
         siteId: action.promise.data

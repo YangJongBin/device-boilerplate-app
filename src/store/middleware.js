@@ -4,11 +4,7 @@ export default () => {
   return next => action => {
     const { promise, type, ...rest } = action;
 
-    if (type === "SAVE_SITEID") {
-      return next({ ...rest, promise, type: `${type}_SUCCESS` });
-    }
-
-    next({ ...rest, type: `${type}_REQUEST` });
+    next({ ...rest, promise, type: `${type}_REQUEST` });
 
     return axios({
       method: promise.method,

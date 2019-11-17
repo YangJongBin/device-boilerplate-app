@@ -23,7 +23,7 @@ const HomeScreen = props => {
 
   // 메인 데이터 요청
   useEffect(() => {
-    props.homeDataReqHandler(siteId);
+    siteId && props.homeDataReqHandler(siteId);
   }, [siteId]);
 
   return (
@@ -81,10 +81,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(HomeScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(HomeScreen);
 
 const styles = StyleSheet.create({
   container: {

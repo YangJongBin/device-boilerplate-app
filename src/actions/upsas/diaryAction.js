@@ -1,4 +1,4 @@
-import { DIARY_DATA, SAVE_DIARYINFO, SAVE_DIARYLIST } from "../actionTypes";
+import { DIARY_DATA, SAVE_DIARYINFO, DELETE_DIARYINFO } from "../actionTypes";
 
 export const reqDiaryData = () => {
   return {
@@ -22,13 +22,13 @@ export const saveDiaryInfo = diaryInfo => {
   };
 };
 
-export const saveDiaryList = diaryList => {
+export const deleteDiaryInfo = diaryInfo => {
   return {
-    type: SAVE_DIARYLIST,
+    type: DELETE_DIARYINFO,
     promise: {
-      method: "get",
-      url: "",
-      data: diaryList
+      method: "post",
+      url: "http://smapi.mynetgear.com:15401/app/diary/delete/",
+      data: diaryInfo
     }
   };
 };

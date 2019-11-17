@@ -5,12 +5,13 @@ import {
   SAVE_DIARYINFO_REQUEST,
   SAVE_DIARYINFO_SUCCESS,
   SAVE_DIARYINFO_FAILURE,
-  SAVE_DIARYLIST_REQUEST,
-  SAVE_DIARYLIST_SUCCESS,
-  SAVE_DIARYLIST_FAILURE
+  DELETE_DIARYINFO_REQUEST,
+  DELETE_DIARYINFO_SUCCESS,
+  DELETE_DIARYINFO_FAILURE
 } from "../../actions/actionTypes";
 
 const defaultState = {
+  diaryInfo: {},
   diaryDataList: [],
   isLoading: true
 };
@@ -36,6 +37,7 @@ const diaryReducer = (state = defaultState, action) => {
     case SAVE_DIARYINFO_REQUEST:
       return {
         ...state,
+        diaryInfoToSave: action.promise.data,
         isLoading: true
       };
     case SAVE_DIARYINFO_SUCCESS:
@@ -48,10 +50,21 @@ const diaryReducer = (state = defaultState, action) => {
         ...state,
         isLoading: false
       };
-    case SAVE_DIARYLIST_SUCCESS:
+    case DELETE_DIARYINFO_REQUEST:
       return {
         ...state,
-        stateDiaryList: action.promise.data
+        diaryInfoToDelete: action.promise.data,
+        isLoading: true
+      };
+    case DELETE_DIARYINFO_SUCCESS:
+      return {
+        ...state,
+        isLoading: false
+      };
+    case DELETE_DIARYINFO_FAILURE:
+      return {
+        ...state,
+        isLoading: false
       };
     default:
       return {

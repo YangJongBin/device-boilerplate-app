@@ -1,14 +1,12 @@
-import React, { Component } from "react";
-import { Text, StyleSheet, View } from "react-native";
+import React, { useEffect } from "react";
+import { View, Text } from "react-native";
 
-export default class ReportScreen extends Component {
-  render() {
-    return (
-      <View>
-        <Text> textInComponent </Text>
-      </View>
-    );
-  }
-}
+const ReportScreen = props => {
+  return (
+    <View>
+      <Text></Text>
+    </View>
+  );
+};
 
-const styles = StyleSheet.create({});
+export default ReportScreen;
