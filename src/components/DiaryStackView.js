@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { View, Text, TextInput } from "react-native";
+import { View, Text, TextInput, StyleSheet } from "react-native";
 import {
   Container,
   Content,
@@ -17,11 +17,11 @@ import { saveDiaryInfo, deleteDiaryInfo } from "../actions/upsas/diaryAction";
 
 EntypoIcon.loadFont();
 
-// TODO:
-const DiaryMemoView = props => {
+const DiaryStackView = props => {
   const { seq, writedate, content } = props.selectedDiaryInfo;
   const [stateContent, setStateContent] = useState(content);
 
+  // 닫기 버튼
   const setDownButton = () => (
     <Button
       transparent
@@ -33,6 +33,7 @@ const DiaryMemoView = props => {
     </Button>
   );
 
+  // 저장 버튼
   const setSaveButton = (seq, writedate, content) => (
     <Button
       transparent
@@ -48,8 +49,8 @@ const DiaryMemoView = props => {
   return (
     <Container>
       <Header>
-        <Body>
-          <Text>{writedate}</Text>
+        <Body style={styles.headerBody}>
+          <Text style={styles.headerText}>{writedate}</Text>
         </Body>
         <Right>
           {stateContent == content
@@ -67,7 +68,7 @@ const DiaryMemoView = props => {
           }}
         ></TextInput>
       </Content>
-      <Footer style={{ backgroundColor: "transparent" }}>
+      <Footer style={styles.footer}>
         <Right>
           <Button
             transparent
@@ -101,4 +102,19 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DiaryMemoView);
+const styles = StyleSheet.create({
+  headerBody: {
+    alignItems: "flex-start"
+  },
+  headerText: {
+    fontWeight: "bold",
+    paddingHorizontal: 5
+  },
+  footer: {
+    paddingHorizontal: 20,
+    backgroundColor: "transparent",
+    borderTopWidth: 0
+  }
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(DiaryStackView);

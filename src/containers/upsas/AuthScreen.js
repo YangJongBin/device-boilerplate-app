@@ -1,15 +1,15 @@
 import _ from "lodash";
 import React, { useEffect } from "react";
-import { StyleSheet, AsyncStorage } from "react-native";
+import { StyleSheet, AsyncStorage, Dimensions, View } from "react-native";
 import { connect } from "react-redux";
-import { Spinner, Container, Content } from "native-base";
-//component
-import OverSpinner from "react-native-loading-spinner-overlay";
+import { Spinner, Container, Content, Thumbnail } from "native-base";
 //actions
 import { reqAuth, saveSiteId } from "../../actions/upsas/authAction";
 
+const { height: deviceHeight } = Dimensions.get("window");
+
 const AuthScreen = props => {
-  const { isLoading, path, userInfo } = props.authReducerInfo; // 인증 reducer 정보
+  const { path, userInfo } = props.authReducerInfo; // 인증 reducer 정보
   const defaultSiteId = _.head(userInfo.siteList).siteId;
 
   // 인증 요청
@@ -33,9 +33,16 @@ const AuthScreen = props => {
   }, [defaultSiteId]);
 
   return (
-    <Container>
+    <Container style={styles.container}>
       <Content>
-        <Spinner></Spinner>
+        <View style={styles.contentView}>
+          <Thumbnail
+            large
+            square
+            source={require("../../../img/fp_logo.png")}
+          ></Thumbnail>
+          <Spinner size={10}></Spinner>
+        </View>
       </Content>
     </Container>
   );
@@ -58,5 +65,16 @@ const mapDispathToProps = dispatch => {
     }
   };
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  contentView: {
+    height: deviceHeight,
+    justifyContent: "center",
+    alignItems: "center"
+  }
+});
 
 export default connect(mapStateToProps, mapDispathToProps)(AuthScreen);

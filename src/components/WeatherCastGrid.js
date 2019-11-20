@@ -64,13 +64,28 @@ const WeatherCastGrid = props => {
       </Col>
       <Col>
         <Row style={styles.iconArea}>
-          <IonIcon style={styles.icon} name="md-sunny" size={25} color="#f9c04c" />
+          <IonIcon
+            style={styles.icon}
+            name="md-sunny"
+            size={25}
+            color="#f9c04c"
+          />
         </Row>
         <Row style={styles.iconArea}>
-          <FontistoIcon style={styles.icon} name="wind" size={20} color="#87d5e7" />
+          <FontistoIcon
+            style={styles.icon}
+            name="wind"
+            size={20}
+            color="#87d5e7"
+          />
         </Row>
         <Row style={styles.iconArea}>
-          <MaterialCommunityIcon style={styles.icon} name="temperature-celsius" size={20} color="#ee5841" />
+          <MaterialCommunityIcon
+            style={styles.icon}
+            name="temperature-celsius"
+            size={20}
+            color="#ee5841"
+          />
         </Row>
       </Col>
       <Col>
@@ -96,10 +111,7 @@ const mapDispatchToProps = dispatch => {
   return {};
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(WeatherCastGrid);
+export default connect(mapStateToProps, mapDispatchToProps)(WeatherCastGrid);
 
 const styles = StyleSheet.create({
   imgArea: {
@@ -114,7 +126,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "flex-start"
   },
-  weatherText: { fontSize: 30 },
+  weatherText: { fontSize: 20 },
   iconArea: {
     justifyContent: "center",
     alignItems: "center"

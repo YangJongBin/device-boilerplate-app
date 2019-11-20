@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { LocaleConfig, Calendar } from "react-native-calendars";
 import EntypoIcon from "react-native-vector-icons/Entypo";
@@ -31,7 +31,7 @@ const DiaryScreen = props => {
   const [stateDiaryList, setStateDiaryList] = useState([]);
 
   // 일지 리스트 생성
-  const makeDiaryList = diaryDataList => {
+  const makeDiaryListComponent = diaryDataList => {
     return _.map(diaryDataList, diaryDataInfo => {
       return (
         <ListItem
@@ -45,9 +45,9 @@ const DiaryScreen = props => {
           }}
         >
           <Body>
-            <Text>{diaryDataInfo.seq}</Text>
-            <Text>{diaryDataInfo.writedate}</Text>
-            <Text>{diaryDataInfo.content}</Text>
+            {/* <Text>{diaryDataInfo.seq}</Text> */}
+            <Text style={styles.listHeader}>{diaryDataInfo.writedate}</Text>
+            <Text style={styles.listContent}>{diaryDataInfo.content}</Text>
           </Body>
         </ListItem>
       );
@@ -75,7 +75,7 @@ const DiaryScreen = props => {
       });
 
       // 일지 리스트 추가와 갱신을 구분하는 조건문
-      // FIXME: 조건 에매함 오류 가능성 열어둬야함..
+      // FIXME: 조건 에매함 오류 가능성 생각..
       if (!diaryInfoToSave.seq) {
         diaryInfoToSave.seq = _.head(updatedDiaryList).seq + 1;
         updatedDiaryList.unshift(diaryInfoToSave);
@@ -113,7 +113,7 @@ const DiaryScreen = props => {
           {/* <Button
             transparent
             onPress={() => {
-              //TODO:
+              //TODO: 리스트 검색기능 추후 업데이트 예정
             }}
           >
             <EntypoIcon name="magnifying-glass" />
@@ -121,7 +121,6 @@ const DiaryScreen = props => {
           <Button
             transparent
             onPress={() => {
-              //FIXME: onPress 수정
               props.navigation.navigate("DiaryAddStackView");
             }}
           >
@@ -130,7 +129,7 @@ const DiaryScreen = props => {
         </Right>
       </Header>
       <Content>
-        <List>{makeDiaryList(stateDiaryList)}</List>
+        <List>{makeDiaryListComponent(stateDiaryList)}</List>
       </Content>
     </Container>
   );
@@ -152,5 +151,13 @@ const mapDispatchToProps = dispatch => {
     }
   };
 };
+
+const styles = StyleSheet.create({
+  listHeader: {
+    color: "gray",
+    marginBottom: 20
+  },
+  listContent: {}
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(DiaryScreen);

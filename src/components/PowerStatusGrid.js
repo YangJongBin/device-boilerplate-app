@@ -3,7 +3,12 @@ import { Text, StyleSheet } from "react-native";
 import { Grid, Col, Row, Card, CardItem } from "native-base";
 
 const PowerStatusGrid = props => {
-  const { currkW = 0, dailyPower = 0, monthPower = 0, comulativePower = 0 } = props.powerGenerationInfo;
+  const {
+    currkW = 0,
+    dailyPower = 0,
+    monthPower = 0,
+    comulativePower = 0
+  } = props.powerGenerationInfo;
 
   return (
     <Grid>
@@ -66,7 +71,8 @@ const styles = StyleSheet.create({
     paddingTop: "5%"
   },
   unitArea: {
-    justifyContent: "center",
+    marginLeft: 20,
+    justifyContent: "flex-start",
     paddingTop: "10%"
   },
   dataText: {

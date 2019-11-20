@@ -2,12 +2,14 @@ import React, { Component, useState, useEffect } from "react";
 import { Text, StyleSheet, AsyncStorage } from "react-native";
 import { connect } from "react-redux";
 import { Header, Body, Right, Left, Thumbnail } from "native-base";
-import MaterialIcon from "react-native-vector-icons/MaterialIcons";
+import EntypoIcon from "react-native-vector-icons/Entypo";
 import PickerSelect from "react-native-picker-select";
 import _ from "lodash";
+// action
+import { saveSiteId } from "../actions/upsas/headerAction.js";
 
 // icon load
-MaterialIcon.loadFont();
+EntypoIcon.loadFont();
 
 const CustomHeader = props => {
   const { siteId, siteList } = props;
@@ -27,16 +29,24 @@ const CustomHeader = props => {
   return (
     <Header style={styles.header}>
       <Left>
-        <Thumbnail small square source={require("../../img/fp_logo.png")}></Thumbnail>
+        <Thumbnail
+          small
+          square
+          source={require("../../img/fp_logo.png")}
+          style={styles.thumbnail}
+        ></Thumbnail>
       </Left>
-      <Body>
+      <Body style={styles.body}>
         <PickerSelect
+          placeholder={{}}
           value={selected}
-          placeholder
+          style={pickerStyle}
           onValueChange={value => {
             setSelected(value);
+            props.handleSiteIdSave(value);
             AsyncStorage.setItem("siteId", value);
           }}
+          // Icon={() => <EntypoIcon name="chevron-down"></EntypoIcon>}
           items={items}
         ></PickerSelect>
       </Body>
@@ -45,7 +55,24 @@ const CustomHeader = props => {
   );
 };
 
-const styles = StyleSheet.create({});
+const pickerStyle = {
+  inputIOS: {
+    alignSelf: "center",
+    paddingLeft: 10
+  },
+  inputAndroid: {
+    alignSelf: "center",
+    paddingLeft: 10
+  },
+  iconContainer: {}
+};
+
+const styles = StyleSheet.create({
+  header: {},
+  body: {
+    flex: 5
+  }
+});
 
 const mapStateToProps = state => {
   return {
@@ -54,10 +81,11 @@ const mapStateToProps = state => {
 };
 
 const mapDispatchToProps = dispatch => {
-  return {};
+  return {
+    handleSiteIdSave: siteId => {
+      dispatch(saveSiteId(siteId));
+    }
+  };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(CustomHeader);
+export default connect(mapStateToProps, mapDispatchToProps)(CustomHeader);

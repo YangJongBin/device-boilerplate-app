@@ -22,8 +22,8 @@ EntypoIncon.loadFont();
 const BottomTabNavigator = createBottomTabNavigator(
   {
     Home: HomeScreen,
-    Trend: TrendScreen,
-    Diary: DiaryScreen
+    Diary: DiaryScreen,
+    Trend: TrendScreen
     // Report: ReportScreen,
   },
   {
@@ -42,7 +42,14 @@ const BottomTabNavigator = createBottomTabNavigator(
         } else if (routeName === "Diary") {
           iconName = "calendar";
         }
-        return <EntypoIncon name={iconName} size={25} coloe={tintColor} />;
+        return (
+          <EntypoIncon
+            name={iconName}
+            size={25}
+            coloe={tintColor}
+            style={{ marginTop: 10 }}
+          />
+        );
       }
     })
   }

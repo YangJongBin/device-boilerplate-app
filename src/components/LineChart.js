@@ -1,20 +1,45 @@
 import React, { Component } from "react";
-import _ from "lodash";
 import ChartView from "react-native-highcharts";
 
 const LinChart = props => {
   const { chartInfo } = props;
   const chartOptions = {
     lang: {
-      months: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
-      shortMonths: ["1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월"],
+      months: [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월"
+      ],
+      shortMonths: [
+        "1월",
+        "2월",
+        "3월",
+        "4월",
+        "5월",
+        "6월",
+        "7월",
+        "8월",
+        "9월",
+        "10월",
+        "11월",
+        "12월"
+      ],
       weekdays: ["월", "화", "수", "목", "금", "토", "일"]
     }
   };
 
   const conf = {
     chart: {
-      type: "spline",
+      type: "line",
       zoomType: "xy"
       // backgroundColor: '#212121'
     },
@@ -85,7 +110,6 @@ const LinChart = props => {
     }
   };
   return (
-    //FIXME: 디자인 개선
     <ChartView
       style={{
         height: 300,

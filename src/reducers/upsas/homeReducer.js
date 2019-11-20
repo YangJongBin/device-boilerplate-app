@@ -1,4 +1,8 @@
-import { HOME_DATA_REQUEST, HOME_DATA_SUCCESS, HOME_DATA_FAILURE } from "../../actions/actionTypes";
+import {
+  HOME_DATA_REQUEST,
+  HOME_DATA_SUCCESS,
+  HOME_DATA_FAILURE
+} from "../../actions/actionTypes";
 
 const defaultState = {
   // home 화면에 보여줄 데이터
@@ -16,6 +20,16 @@ const defaultState = {
       dailyPower: 0, // 금일 발전량
       monthPower: 0, // 당월 발전량
       comulativePower: 0 // 누적 발전량
+    },
+    growthEnvChartInfo: {
+      lux: 0,
+      co2: 0,
+      soilWaterValue: 0,
+      soilTemperature: 0,
+      soilReh: 0,
+      outsideAirTemperature: 0,
+      outsideAirReh: 0,
+      inclinedSolar: 0
     }
   },
   isLoading: true // 로딩 화면 상태
