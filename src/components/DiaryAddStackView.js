@@ -14,6 +14,7 @@ import {
 import moment from "moment";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import ImagePicker from "react-native-image-picker";
+import fs from "react-native-fs";
 import _ from "lodash";
 //action
 import { saveDiaryInfo } from "../actions/upsas/diaryAction";
@@ -22,7 +23,7 @@ EntypoIcon.loadFont();
 
 const DiaryMemoView = props => {
   const [stateDiaryContent, setStateDiaryContent] = useState("");
-  const [base64List, setBase64List] = useState([]);
+  const [imageSourceList, setImageSourceList] = useState([]);
 
   // 닫기 버튼
   const setDownButton = () => (
@@ -41,7 +42,7 @@ const DiaryMemoView = props => {
     <Button
       transparent
       onPress={() => {
-        props.diarySaveHandler({ writedate, content });
+        props.diarySaveHandler({ writedate, content, imageSourceList });
         props.navigation.goBack();
       }}
     >
@@ -84,7 +85,7 @@ const DiaryMemoView = props => {
           flex: 0.1
         }}
       >
-        <Row>{makeImageListComponet(base64List)}</Row>
+        <Row>{makeImageListComponet(imageSourceList)}</Row>
       </View>
       <Footer style={styles.footer}>
         {/* FIXME: 버튼 정렬을 위한 임시 flex */}
@@ -93,16 +94,13 @@ const DiaryMemoView = props => {
           <Button
             transparent
             onPress={() => {
-              // FIXME: 갤러리 연동 기능
-              if (base64List.length < 3) {
-                if (!res.didCancel) {
-                  base64.getBase64String(res.uri).then(string => {
-                    setBase64List([...base64List, ""]);
-                  });
-                }
-              } else {
-                alert("사진은 3개까지만 등록 가능합니다.");
-              }
+              // // FIXME: 갤러리 연동 기능
+              // ImagePicker.launchImageLibrary("", res => {
+              //   if (!res.didCancel) {
+              //     setImageSourceList([...imageSourceList].concat(res.uri));
+              //   }
+              // });
+              alert("준비중입니다.");
             }}
           >
             <EntypoIcon name="folder-images"></EntypoIcon>

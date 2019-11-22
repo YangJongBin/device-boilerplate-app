@@ -12,7 +12,7 @@ import { saveSiteId } from "../actions/upsas/headerAction.js";
 EntypoIcon.loadFont();
 
 const CustomHeader = props => {
-  const { siteId, siteList } = props;
+  const { siteId, siteList, hasSegment } = props;
   const [selected, setSelected] = useState(0); // state로 관리하지 않으면 pick이 되지않음.
   //
   const items = _.map(siteList, siteInfo => {
@@ -27,7 +27,7 @@ const CustomHeader = props => {
   }, [siteId]);
 
   return (
-    <Header style={styles.header}>
+    <Header hasSegment={hasSegment} style={styles.header}>
       <Left>
         <Thumbnail
           small
@@ -50,7 +50,7 @@ const CustomHeader = props => {
           items={items}
         ></PickerSelect>
       </Body>
-      <Right></Right>
+      <Right>{/* <EntypoIcon name="ccw"></EntypoIcon> */}</Right>
     </Header>
   );
 };

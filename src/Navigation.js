@@ -21,9 +21,9 @@ EntypoIncon.loadFont();
 // app 아래 탭 메뉴 세팅
 const BottomTabNavigator = createBottomTabNavigator(
   {
+    Trend: TrendScreen,
     Home: HomeScreen,
-    Diary: DiaryScreen,
-    Trend: TrendScreen
+    Diary: DiaryScreen
     // Report: ReportScreen,
   },
   {
@@ -40,7 +40,7 @@ const BottomTabNavigator = createBottomTabNavigator(
         } else if (routeName === "Report") {
           iconName = "text-document";
         } else if (routeName === "Diary") {
-          iconName = "calendar";
+          iconName = "open-book";
         }
         return (
           <EntypoIncon

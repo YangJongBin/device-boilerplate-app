@@ -36,7 +36,6 @@ target 'device_boilerplate_app' do
 
 
 
-
   target 'device_boilerplate_appTests' do
     inherit! :search_paths
     # Pods for testing
