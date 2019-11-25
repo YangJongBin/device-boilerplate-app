@@ -17,7 +17,7 @@ import ImagePicker from "react-native-image-picker";
 import fs from "react-native-fs";
 import _ from "lodash";
 //action
-import { saveDiaryInfo } from "../actions/upsas/diaryAction";
+import { saveDiaryInfo } from "../../actions/upsas/diaryAction";
 // load icon
 EntypoIcon.loadFont();
 

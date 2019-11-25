@@ -11,9 +11,12 @@ import LoginScreen from "./containers/upsas/LoginScreen";
 import TrendScreen from "./containers/upsas/TrendScreen";
 import ReportScreen from "./containers/upsas/ReportScreen";
 import DiaryScreen from "./containers/upsas/DiaryScreen";
+import SearchScreen from "./containers/upsas/SearchScreen";
+import MyScreen from "./containers/upsas/MyScreen";
+import JoinScreen from "./containers/upsas/JoinScreen";
 //componet
-import DiaryStackView from "./components/DiaryStackView";
-import DiaryAddStackView from "./components/DiaryAddStackView";
+import DiaryUpdateScreen from "./containers/upsas/DiaryUpdateScreen";
+import DiaryAddScreen from "./containers/upsas/DiaryAddScreen";
 
 // icon load
 EntypoIncon.loadFont();
@@ -21,10 +24,11 @@ EntypoIncon.loadFont();
 // app 아래 탭 메뉴 세팅
 const BottomTabNavigator = createBottomTabNavigator(
   {
-    Trend: TrendScreen,
     Home: HomeScreen,
-    Diary: DiaryScreen
-    // Report: ReportScreen,
+    Trend: TrendScreen,
+    Report: ReportScreen,
+    Diary: DiaryScreen,
+    My: MyScreen
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -41,6 +45,8 @@ const BottomTabNavigator = createBottomTabNavigator(
           iconName = "text-document";
         } else if (routeName === "Diary") {
           iconName = "open-book";
+        } else if (routeName == "My") {
+          iconName = "emoji-happy";
         }
         return (
           <EntypoIncon
@@ -55,17 +61,23 @@ const BottomTabNavigator = createBottomTabNavigator(
   }
 );
 
-//FIXME: 네이밍 조금 이상..
 const StackNavigator = createStackNavigator(
   {
     App: BottomTabNavigator,
-    DiaryStackView: props => (
-      <DiaryStackView
+    DiaryUpdateScreen: props => (
+      <DiaryUpdateScreen
         {...props}
         selectedDiaryInfo={props.navigation.state.params}
-      ></DiaryStackView>
+      ></DiaryUpdateScreen>
     ),
-    DiaryAddStackView: DiaryAddStackView
+    DiaryAddScreen: DiaryAddScreen,
+    // SearchScreen: props => (
+    //   <SearchScreen
+    //     {...props}
+    //     searchInfo={props.navigation.state.params.searchInfo}
+    //   ></SearchScreen>
+    // ),
+    Join: JoinScreen
   },
   {
     headerMode: "none",
@@ -79,7 +91,6 @@ const SwitchNavigator = createAnimatedSwitchNavigator(
     AuthScreen: AuthScreen,
     Login: LoginScreen,
     App: StackNavigator
-    // App: AppBottomTab
   },
   {
     initialRouteName: "AuthScreen"

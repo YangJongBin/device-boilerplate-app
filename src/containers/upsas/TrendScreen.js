@@ -1,16 +1,28 @@
-import React, { Component, useEffect, useState } from "react";
-import { Text, StyleSheet, View, ScrollView } from "react-native";
+import React, { Component, useEffect, useState, useCallback } from "react";
+import {
+  Text,
+  StyleSheet,
+  View,
+  ScrollView,
+  SafeAreaView,
+  RefreshControl,
+  AsyncStorage
+} from "react-native";
 import { Card, Container, Content, Segment, Button } from "native-base";
 import { connect } from "react-redux";
+import EntypoIcon from "react-native-vector-icons/Entypo";
 import _ from "lodash";
-import DatePicker from "react-native-datepicker";
-import Picker from "react-native-picker-select";
+import moment from "moment";
 //compoents
 import CustomHeader from "../../components/CustomHeader";
 import LineChart from "../../components/LineChart";
+import OverlayLoading from "react-native-loading-spinner-overlay";
 //action
 import { reqTrendData } from "../../actions/upsas/trendAction";
-import moment from "moment";
+import { changeSearchInfo } from "../../actions/upsas/trendSearchAction";
+
+//load icon
+EntypoIcon.loadFont();
 
 // 라인 차트 리스트 생성
 const makeLineChartList = lineChartDataList => {
@@ -23,13 +35,26 @@ const makeLineChartList = lineChartDataList => {
   });
 };
 
+const waitRefresh = timeout => {
+  return new Promise(resolve => {
+    setTimeout(resolve, timeout);
+  });
+};
+
 const TrendScreen = props => {
+  //state
   const [selectedSegment, setSelectedSegment] = useState("sensor");
-  const [startDateInputVal, setStartDateInputVal] = useState(
-    moment().format("YYYY-MM-DD")
-  );
-  const [searchInterval, setSearchInterval] = useState("hour");
-  const { trendReducerInfo, authReducerInfo } = props;
+  const defaultSearchInfo = {
+    searchType: "days",
+    searchInterval: "hour",
+    strStartDateInputValue: moment().format("YYYY-MM-DD"),
+    strEndDateInputValue: ""
+  };
+  const [searchInfo, setSearchInfo] = useState(defaultSearchInfo);
+  //props
+  const { trendReducerInfo, authReducerInfo, trendSearchReducerInfo } = props;
+  //
+  const { changedSearchInfo } = trendSearchReducerInfo;
   // trend 응답 데이터 정보
   const { trendDataInfo, isLoading } = trendReducerInfo;
   const { sensorTrendList, inverterTrendList } = trendDataInfo;
@@ -37,34 +62,49 @@ const TrendScreen = props => {
   const { userInfo } = authReducerInfo;
   const { siteList } = userInfo;
   const { siteId } = props.siteIdSaveReducerInfo; // 선택된 장소 id
-  const intervalPickerItems = [
-    {
-      label: "1시간",
-      value: "hour"
-    },
-    {
-      label: "10분",
-      value: "min10"
-    },
-    {
-      label: "1분",
-      value: "min"
+  const {
+    searchType,
+    searchInterval,
+    strStartDateInputValue,
+    strEndDateInputValue
+  } = searchInfo;
+
+  const [refreshing, setRefreshing] = useState(false);
+  const onRefresh = useCallback(() => {
+    setRefreshing(true);
+    props.trendDataReqHandler(
+      siteId,
+      searchType,
+      searchInterval,
+      strStartDateInputValue,
+      strEndDateInputValue
+    );
+    waitRefresh(2000).then(() => setRefreshing(false));
+  }, [refreshing]);
+
+  // 검색 상태 변경시 데이터 재 요청
+  useEffect(() => {
+    if (!_.isUndefined(changedSearchInfo)) {
+      if (!_.isEqual(changedSearchInfo, searchInfo)) {
+        setSearchInfo(changedSearchInfo);
+      }
     }
-  ];
+  }, [changedSearchInfo]);
 
   // 트렌드 데이터 요청
   useEffect(() => {
     props.trendDataReqHandler(
       siteId,
-      "days",
+      searchType,
       searchInterval,
-      startDateInputVal,
-      ""
+      strStartDateInputValue,
+      strEndDateInputValue
     );
-  }, [siteId]);
+  }, [siteId, searchInfo]);
 
   return (
-    <Container>
+    <Container style={styles.container}>
+      <OverlayLoading visible={isLoading}></OverlayLoading>
       <CustomHeader
         hasSegment={true}
         siteId={siteId}
@@ -93,51 +133,40 @@ const TrendScreen = props => {
         </Button>
       </Segment>
       <Segment style={styles.segment}>
-        <Picker
-          value={searchInterval}
-          style={intervalPickerStyle}
-          placeholder
-          onValueChange={selectedInterval => {
-            setSearchInterval(selectedInterval);
-          }}
-          items={intervalPickerItems}
-        ></Picker>
-        <DatePicker
-          date={startDateInputVal}
-          mode="date"
-          locale="ko"
-          confirmBtnText="확인"
-          cancelBtnText="취소"
-          showIcon={false}
-          style={styles.datePicker}
-          onDateChange={date => {
-            setStartDateInputVal(date);
-          }}
-        ></DatePicker>
+        <Text>
+          {strStartDateInputValue}, {searchInterval}
+        </Text>
         <Button
           active
           first
           last
+          style={styles.searchButton}
           onPress={() => {
-            props.trendDataReqHandler(
-              siteId,
-              "days",
-              searchInterval,
-              startDateInputVal,
-              ""
-            );
+            props.navigation.navigate("SearchScreen", {
+              searchInfo: searchInfo
+            });
           }}
         >
-          <Text>검색</Text>
+          <EntypoIcon name="calendar"></EntypoIcon>
         </Button>
       </Segment>
-      <Content>
-        <ScrollView>
+      {/* <Content> */}
+      <SafeAreaView style={styles.content}>
+        <ScrollView
+          style={styles.scrollView}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              onRefresh={onRefresh}
+            ></RefreshControl>
+          }
+        >
           {makeLineChartList(
             selectedSegment === "sensor" ? sensorTrendList : inverterTrendList
           )}
         </ScrollView>
-      </Content>
+      </SafeAreaView>
+      {/* </Content> */}
     </Container>
   );
 };
@@ -145,6 +174,7 @@ const TrendScreen = props => {
 const mapStateToProps = state => {
   return {
     trendReducerInfo: state.trendReducerInfo,
+    trendSearchReducerInfo: state.trendSearchReducerInfo,
     authReducerInfo: state.authReducerInfo,
     siteIdSaveReducerInfo: state.siteIdSaveReducerInfo
   };
@@ -156,41 +186,53 @@ const mapDispatchToProps = dispatch => {
       siteId,
       searchType,
       searchInterval,
-      startDateInputValue,
-      endDateInputValue
+      strStartDateInputValue,
+      strEndDateInputValue
     ) => {
       dispatch(
         reqTrendData(
           siteId,
           searchType,
           searchInterval,
-          startDateInputValue,
-          endDateInputValue
+          strStartDateInputValue,
+          strEndDateInputValue
         )
+      );
+      dispatch(
+        changeSearchInfo({
+          searchType,
+          searchInterval,
+          strStartDateInputValue,
+          strEndDateInputValue
+        })
       );
     }
   };
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+  content: {
+    flex: 1
+  },
   segment: {
     paddingHorizontal: 10,
-    justifyContent: "flex-end"
+    justifyContent: "flex-end",
+    alignItems: "center"
   },
   segmentButton: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center"
   },
-  datePicker: { marginHorizontal: 5 }
-});
-
-const intervalPickerStyle = StyleSheet.create({
-  inputIOS: {
-    marginHorizontal: 5,
-    borderWidth: 1,
-    borderColor: "#aaa",
-    padding: 11
+  searchButton: {
+    padding: 10,
+    marginHorizontal: 10
+  },
+  scrollView: {
+    flex: 1
   }
 });
 

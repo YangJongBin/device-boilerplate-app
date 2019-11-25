@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { connect } from "react-redux";
 import { LocaleConfig, Calendar } from "react-native-calendars";
-import EntypoIcon from "react-native-vector-icons/Entypo";
 import {
   Container,
   Content,
@@ -15,6 +14,8 @@ import {
   Button,
   Thumbnail
 } from "native-base";
+import OverlayLoading from "react-native-loading-spinner-overlay";
+import EntypoIcon from "react-native-vector-icons/Entypo";
 import _ from "lodash";
 //action
 import { reqDiaryData, saveDiaryList } from "../../actions/upsas/diaryAction";
@@ -26,7 +27,8 @@ const DiaryScreen = props => {
   const {
     diaryDataList,
     diaryInfoToSave,
-    diaryInfoToDelete
+    diaryInfoToDelete,
+    isLoading
   } = props.diaryReducerInfo; // 일지 리스트
   const [stateDiaryList, setStateDiaryList] = useState([]);
 
@@ -37,7 +39,7 @@ const DiaryScreen = props => {
         <ListItem
           onPress={() => {
             // 네비게이션 stack에 클릭한 일지 내용 전달
-            props.navigation.navigate("DiaryStackView", {
+            props.navigation.navigate("DiaryUpdateScreen", {
               seq: diaryDataInfo.seq,
               writedate: diaryDataInfo.writedate,
               content: diaryDataInfo.content
@@ -101,6 +103,7 @@ const DiaryScreen = props => {
 
   return (
     <Container>
+      <OverlayLoading visible={isLoading}></OverlayLoading>
       <Header>
         <Left>
           <Thumbnail
@@ -121,7 +124,7 @@ const DiaryScreen = props => {
           <Button
             transparent
             onPress={() => {
-              props.navigation.navigate("DiaryAddStackView");
+              props.navigation.navigate("DiaryAddScreen");
             }}
           >
             <EntypoIcon name="plus" />

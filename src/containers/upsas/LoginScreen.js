@@ -1,25 +1,23 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Text, StyleSheet, AsyncStorage } from "react-native";
-import { Container, Content, Input, Form, Item, Icon, Button, Toast } from "native-base";
+import {
+  Container,
+  Content,
+  Input,
+  Form,
+  Item,
+  Icon,
+  Button,
+  Toast
+} from "native-base";
 //actions...
 import { reqLogin } from "../../actions/upsas/authAction";
 
 const LoginScreen = props => {
-  const { isLoggedIn } = props.loginReducerInfo; // 로그인 reduce 정보
-
-  // 로그인 성공 유무에 대한 이벤트
-  // useEffect(() => {
-  //   // FIXME: 로그인 실패 메세지 수정
-  //   if (isLoggedIn) {
-  //     props.navigation.navigate("App");
-  //   } else if (isLoggedIn === false) {
-  //     Toast.show({
-  //       type: "danger",
-  //       text: "로그인 실패"
-  //     });
-  //   }
-  // }, [isLoggedIn]);
+  const { isLoggedIn, path } = props.loginReducerInfo; // 로그인 reduce 정보
+  const [userId, setUserId] = useState("");
+  const [password, setPassword] = useState("");
 
   return (
     <Container style={styles.container}>
@@ -48,20 +46,14 @@ const LoginScreen = props => {
         <Button
           disabled={false}
           onPress={() => {
-            props.loginHandler(this.userid, this.password);
+            if (!userId && !password)
+              props.loginHandler(this.userid, this.password);
+            props.navigation.navigate(path);
           }}
           style={styles.loginBtn}
         >
-          <Text style={styles.loginText}> LOGIN </Text>
+          <Text style={styles.loginText}> Sign In </Text>
         </Button>
-        <Text
-          onPress={() => {
-            // FIXME:
-            props.navigation.navigate("JoinScreen");
-          }}
-        >
-          sign up
-        </Text>
       </Form>
     </Container>
   );
@@ -81,10 +73,7 @@ const mapDispatchToProps = dispatch => {
   };
 };
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
 // style...
 const styles = StyleSheet.create({
@@ -109,5 +98,9 @@ const styles = StyleSheet.create({
   },
   loginText: {
     color: "white"
+  },
+  signUpText: {
+    color: "#aaa",
+    marginTop: 10
   }
 });
