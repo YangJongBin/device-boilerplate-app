@@ -45,11 +45,9 @@ const HomeScreen = props => {
 
   const onRefresh = useCallback(() => {
     setRefreshing(true);
-    AsyncStorage.getItem("siteId").then(siteId => {
-      props.homeDataReqHandler(siteId);
-    });
+    props.homeDataReqHandler(siteId);
     waitRefresh(2000).then(() => setRefreshing(false));
-  }, [refreshing]);
+  }, [refreshing, siteId]);
 
   // 메인 데이터 요청
   useEffect(() => {

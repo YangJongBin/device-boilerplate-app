@@ -1,33 +1,51 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Text, StyleSheet, AsyncStorage } from "react-native";
-import {
-  Container,
-  Content,
-  Input,
-  Form,
-  Item,
-  Icon,
-  Button,
-  Toast
-} from "native-base";
+import { Text, StyleSheet } from "react-native";
+import { Container, Input, Form, Item, Icon, Button, Toast } from "native-base";
 //actions...
 import { reqLogin } from "../../actions/upsas/authAction";
+import OverlayLoading from "react-native-loading-spinner-overlay";
 
 const LoginScreen = props => {
-  const { isLoggedIn, path } = props.loginReducerInfo; // 로그인 reduce 정보
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const { isLoading, isLoggedIn, naviPath } = props.authReducerInfo; // 로그인 reduce 정보
+  const [userId, setUserId] = useState();
+  const [password, setPassword] = useState();
+
+  const checkLoginInfo = (userId, password) => {
+    if (!userId && password) {
+      Toast.show({
+        text: "아이디를 입력해주세요.",
+        type: "danger"
+      });
+    } else if (userId && !password) {
+      Toast.show({
+        text: "비밀번호를 입력해주세요.",
+        type: "danger"
+      });
+    } else if (!userId && !password) {
+      Toast.show({
+        text: "아이디와 비밀번호를 확인해주세요.",
+        type: "danger"
+      });
+    } else if (userId && password) {
+      props.loginHandler(userId, password);
+    }
+  };
+
+  useEffect(() => {
+    props.navigation.navigate(naviPath);
+  }, [isLoggedIn]);
 
   return (
     <Container style={styles.container}>
+      <OverlayLoading visible={isLoading}></OverlayLoading>
       <Form style={styles.loginForm}>
         <Item>
           <Icon name="person" />
           <Input
             placeholder="UserId"
-            onChangeText={text => {
-              this.userid = text;
+            onChangeText={userIdInputValue => {
+              setUserId(userIdInputValue);
             }}
             style={styles.loginInput}
           />
@@ -37,8 +55,8 @@ const LoginScreen = props => {
           <Input
             placeholder="Password"
             secureTextEntry={true}
-            onChangeText={text => {
-              this.password = text;
+            onChangeText={passwordInputValue => {
+              setPassword(passwordInputValue);
             }}
             style={styles.loginInput}
           />
@@ -46,9 +64,8 @@ const LoginScreen = props => {
         <Button
           disabled={false}
           onPress={() => {
-            if (!userId && !password)
-              props.loginHandler(this.userid, this.password);
-            props.navigation.navigate(path);
+            checkLoginInfo(userId, password);
+            // props.navigation.navigate(!isLoggedIn ? "Login" : "AuthScreen");
           }}
           style={styles.loginBtn}
         >
@@ -61,7 +78,7 @@ const LoginScreen = props => {
 
 const mapStateToProps = state => {
   return {
-    loginReducerInfo: state.loginReducerInfo
+    authReducerInfo: state.authReducerInfo
   };
 };
 

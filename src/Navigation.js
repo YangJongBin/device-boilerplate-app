@@ -11,8 +11,7 @@ import LoginScreen from "./containers/upsas/LoginScreen";
 import TrendScreen from "./containers/upsas/TrendScreen";
 import ReportScreen from "./containers/upsas/ReportScreen";
 import DiaryScreen from "./containers/upsas/DiaryScreen";
-import SearchScreen from "./containers/upsas/SearchScreen";
-import MyScreen from "./containers/upsas/MyScreen";
+import MoreScreen from "./containers/upsas/MoreScreen";
 import JoinScreen from "./containers/upsas/JoinScreen";
 //componet
 import DiaryUpdateScreen from "./containers/upsas/DiaryUpdateScreen";
@@ -28,7 +27,7 @@ const BottomTabNavigator = createBottomTabNavigator(
     Trend: TrendScreen,
     Report: ReportScreen,
     Diary: DiaryScreen,
-    My: MyScreen
+    More: MoreScreen
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
@@ -45,8 +44,8 @@ const BottomTabNavigator = createBottomTabNavigator(
           iconName = "text-document";
         } else if (routeName === "Diary") {
           iconName = "open-book";
-        } else if (routeName == "My") {
-          iconName = "emoji-happy";
+        } else if (routeName == "More") {
+          iconName = "dots-three-horizontal";
         }
         return (
           <EntypoIncon
@@ -71,12 +70,6 @@ const StackNavigator = createStackNavigator(
       ></DiaryUpdateScreen>
     ),
     DiaryAddScreen: DiaryAddScreen,
-    // SearchScreen: props => (
-    //   <SearchScreen
-    //     {...props}
-    //     searchInfo={props.navigation.state.params.searchInfo}
-    //   ></SearchScreen>
-    // ),
     Join: JoinScreen
   },
   {

@@ -9,7 +9,7 @@ import { reqAuth, saveSiteId } from "../../actions/upsas/authAction";
 const { height: deviceHeight } = Dimensions.get("window");
 
 const AuthScreen = props => {
-  const { path, userInfo } = props.authReducerInfo; // 인증 reducer 정보
+  const { isLoggedIn, userInfo, naviPath } = props.authReducerInfo; // 인증 reducer 정보
   const defaultSiteId = _.head(userInfo.siteList).siteId;
 
   // 인증 요청
@@ -19,16 +19,14 @@ const AuthScreen = props => {
 
   // 인증 결과에 따라 페이지 이동
   useEffect(() => {
-    props.navigation.navigate(path);
-    path === "Login" && AsyncStorage.clear(); // 로그인 페이지로 이동시 asnycStorage 초기화
-  }, [path]);
+    props.navigation.navigate(naviPath);
+    naviPath === "Login" && AsyncStorage.clear(); // 로그인 페이지로 이동시 asnycStorage 초기화
+  }, [isLoggedIn]);
 
   // 초기 장소 지정
   useEffect(() => {
     AsyncStorage.getItem("siteId", (err, siteId) => {
-      _.isNull(siteId)
-        ? props.handleSiteSave(defaultSiteId)
-        : props.handleSiteSave(siteId);
+      props.handleSiteSave(_.isNull(siteId) ? defaultSiteId : siteId);
     });
   }, [defaultSiteId]);
 
@@ -46,7 +44,6 @@ const AuthScreen = props => {
       </Content>
     </Container>
   );
-  // return <OverSpinner textContent="Loading..." textStyle={{ color: "white" }} visible={isLoading} />;
 };
 
 const mapStateToProps = state => {

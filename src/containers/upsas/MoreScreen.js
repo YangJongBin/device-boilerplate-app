@@ -1,33 +1,51 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import {
-  View,
   Text,
   StyleSheet,
   Dimensions,
   AsyncStorage,
   Alert
 } from "react-native";
-import { Container, Content, Footer, Thumbnail } from "native-base";
+import {
+  Container,
+  Content,
+  Footer,
+  ListItem,
+  List,
+  Header,
+  Col
+} from "native-base";
+//action
+import { reqLogout } from "../../actions/upsas/authAction";
+import OveralyLoading from "react-native-loading-spinner-overlay";
 
 const { height } = Dimensions.get("window");
 
 const ReportScreen = props => {
-  const { userInfo } = props.authReducerInfo;
+  const { userInfo, isLoggedIn, isLoading, naviPath } = props.authReducerInfo;
   const { userId, name } = userInfo;
+
+  useEffect(() => {
+    props.navigation.navigate(naviPath);
+  }, [isLoggedIn]);
 
   return (
     <Container style={styles.container}>
+      <OveralyLoading visible={isLoading}></OveralyLoading>
+      <Header></Header>
       <Content>
-        <View style={styles.content}>
-          <Thumbnail
-            large
-            source={require("../../../img/fp_logo.png")}
-          ></Thumbnail>
-          <Text style={styles.userIdText}>
-            {userId} ({name})
-          </Text>
-        </View>
+        <List>
+          <ListItem>
+            <Col style={styles.alignItemsFlexEnd}>
+              <Text style={styles.idText}>{userId}</Text>
+              <Text>{name}</Text>
+            </Col>
+          </ListItem>
+          <ListItem>
+            <Text>version 0.0.1</Text>
+          </ListItem>
+        </List>
       </Content>
       <Footer style={styles.Footer}>
         <Text
@@ -46,7 +64,7 @@ const ReportScreen = props => {
                   text: "OK",
                   onPress: () => {
                     AsyncStorage.clear();
-                    props.navigation.navigate("Login");
+                    props.handleLogout();
                   }
                 }
               ],
@@ -67,8 +85,12 @@ const mapStateToProps = state => {
   };
 };
 
-const mapDispatchToProps = () => {
-  return {};
+const mapDispatchToProps = dispatch => {
+  return {
+    handleLogout: () => {
+      dispatch(reqLogout());
+    }
+  };
 };
 
 const styles = StyleSheet.create({
@@ -86,6 +108,15 @@ const styles = StyleSheet.create({
   },
   userIdText: {
     margin: 10
+  },
+  alignItemsFlexEnd: {
+    alignItems: "flex-end"
+  },
+  idText: {
+    fontSize: 40,
+    marginTop: 50,
+    marginBottom: 20,
+    fontWeight: "bold"
   }
 });
 
