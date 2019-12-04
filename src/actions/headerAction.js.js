@@ -1,4 +1,4 @@
-import { SAVE_SITEID } from "../actionTypes";
+import { SAVE_SITEID } from "./actionTypes";
 
 export const saveSiteId = siteId => {
   return {

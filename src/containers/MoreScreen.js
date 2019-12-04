@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Dimensions,
   AsyncStorage,
-  Alert
+  Alert,
+  ActivityIndicator
 } from "react-native";
 import {
   Container,
@@ -14,11 +15,11 @@ import {
   ListItem,
   List,
   Header,
-  Col
+  Col,
+  Spinner
 } from "native-base";
 //action
-import { reqLogout } from "../../actions/upsas/authAction";
-import OveralyLoading from "react-native-loading-spinner-overlay";
+import { reqLogout } from "../actions/authAction";
 
 const { height } = Dimensions.get("window");
 
@@ -32,7 +33,6 @@ const ReportScreen = props => {
 
   return (
     <Container style={styles.container}>
-      <OveralyLoading visible={isLoading}></OveralyLoading>
       <Header></Header>
       <Content>
         <List>
@@ -72,8 +72,9 @@ const ReportScreen = props => {
             );
           }}
         >
-          Sign Out
+          {isLoading ? "" : "Sign Out"}
         </Text>
+        <ActivityIndicator animating={isLoading}></ActivityIndicator>
       </Footer>
     </Container>
   );

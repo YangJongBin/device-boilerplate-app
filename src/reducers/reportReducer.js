@@ -1,4 +1,8 @@
-import { REPORT_DATA_REQUEST, REPORT_DATA_SUCCESS, REPORT_DATA_FAILURE } from "../../actions/actionTypes";
+import {
+  REPORT_DATA_REQUEST,
+  REPORT_DATA_SUCCESS,
+  REPORT_DATA_FAILURE
+} from "../actions/actionTypes";
 
 const defaultState = {
   reportDataInfo: {

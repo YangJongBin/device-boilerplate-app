@@ -1,4 +1,4 @@
-import { REPORT_DATA } from "../actionTypes";
+import { REPORT_DATA } from "./actionTypes";
 
 export const reqReportData = (siteId = "", category = "") => {
   return {

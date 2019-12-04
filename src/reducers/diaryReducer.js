@@ -8,7 +8,7 @@ import {
   DELETE_DIARYINFO_REQUEST,
   DELETE_DIARYINFO_SUCCESS,
   DELETE_DIARYINFO_FAILURE
-} from "../../actions/actionTypes";
+} from "../actions/actionTypes";
 
 const defaultState = {
   diaryInfo: {},

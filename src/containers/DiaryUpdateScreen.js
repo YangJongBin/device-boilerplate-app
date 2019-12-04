@@ -13,10 +13,7 @@ import {
 } from "native-base";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 //action
-import {
-  saveDiaryInfo,
-  deleteDiaryInfo
-} from "../../actions/upsas/diaryAction";
+import { saveDiaryInfo, deleteDiaryInfo } from "../actions/diaryAction";
 
 EntypoIcon.loadFont();
 

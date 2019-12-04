@@ -4,8 +4,7 @@ import {
   StyleSheet,
   ScrollView,
   SafeAreaView,
-  RefreshControl,
-  Dimensions
+  RefreshControl
 } from "react-native";
 import Modal from "react-native-modal";
 import {
@@ -26,16 +25,13 @@ import moment from "moment";
 import Picker from "react-native-picker-select";
 import DatePicker from "react-native-datepicker";
 //compoents
-import CustomHeader from "../../components/CustomHeader";
-import LineChart from "../../components/LineChart";
-import OverlayLoading from "react-native-loading-spinner-overlay";
+import CustomHeader from "../components/CustomHeader";
+import LineChart from "../components/TrendLineChart";
 //action
-import { reqTrendData } from "../../actions/upsas/trendAction";
+import { reqTrendData } from "../actions/trendAction";
 
 //load icon
 EntypoIcon.loadFont();
-//dimensions
-const { deviceWidth } = Dimensions.get("window");
 
 // 라인 차트 리스트 생성
 const makeLineChartList = lineChartDataList => {
@@ -68,24 +64,28 @@ const TrendScreen = props => {
   const { siteList } = authReducerInfo.userInfo; // auth 응답 데이터 정보
   const { siteId } = props.siteIdSaveReducerInfo; // 선택된 장소 id
   //state
-  const [selectedSegment, setSelectedSegment] = useState("sensor");
-  const [isVisibleModal, setIsVisibleModal] = useState(false);
-  const [searchInfo, setSearchInfo] = useState(defaultSearchInfo);
-  const [refreshing, setRefreshing] = useState(false);
+  const [selectedSegment, setSelectedSegment] = useState("sensor"); // sensor or inverter
+  const [isVisibleSearchModal, setIsVisibleSearchModal] = useState(false); // 검색 창 열람
+  const [searchInfo, setSearchInfo] = useState(defaultSearchInfo); // 기간, 조회 형택 등 정보
+  const [refreshing, setRefreshing] = useState(false); // 새로고침 기능 상태
+  // 검색 창의 조회 타입
   const [modalSearchType, setModalSearchType] = useState(
     defaultSearchInfo.searchType
   );
+  // 검색 창의 조회 간격
   const [modalSearchInterval, setModalSearchInterval] = useState(
     defaultSearchInfo.searchInterval
   );
+  // 검색 창의 시작 날
   const [
     modalStrStartDateInputValue,
     setModalStrStartDateInputValue
   ] = useState(defaultSearchInfo.strStartDateInputValue);
+  // 검색 창의 종료 날
   const [modalStrEndDateInputValue, setModalStrEndDateInputValue] = useState(
     defaultSearchInfo.strEndDateInputValue
   );
-  //times
+  // select 목록에 쓰일 조회 형태 list
   const searchTypeItems = [
     {
       label: "일일",
@@ -97,6 +97,7 @@ const TrendScreen = props => {
     }
   ];
 
+  // select 목록에 쓰일 조회 간격 list
   const searchIntervalItems = [
     {
       label: "1시간",
@@ -113,26 +114,29 @@ const TrendScreen = props => {
   ];
 
   // 검색 창 모델 토글
-  const toggleModal = () => {
-    setIsVisibleModal(!isVisibleModal);
+  const toggleSearchModal = () => {
+    setIsVisibleSearchModal(!isVisibleSearchModal);
   };
 
-  // 새로고침
+  // 새로고침 이벤트 발생시 데이터 재요청 실행
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    props.trendDataReqHandler(
+    props.handleTrendDataReq(
       siteId,
       searchInfo.searchType,
       searchInfo.searchInterval,
       searchInfo.strStartDateInputValue,
       searchInfo.strEndDateInputValue
     );
-    waitRefresh(2000).then(() => setRefreshing(false));
-  }, [refreshing, searchInfo, siteId]);
+  }, [searchInfo, siteId]);
+
+  // 데이터 요청에 따른 로딩 상태 변경
+  useEffect(() => {
+    setRefreshing(isLoading);
+  }, [isLoading]);
 
   // 트렌드 데이터 요청
   useEffect(() => {
-    props.trendDataReqHandler(
+    props.handleTrendDataReq(
       siteId,
       searchInfo.searchType,
       searchInfo.searchInterval,
@@ -143,11 +147,14 @@ const TrendScreen = props => {
 
   return (
     <Container style={styles.container}>
-      {/* TODO: Modal content */}
-      <Modal isVisible={isVisibleModal} animationIn="slideInUp" deviceWidth={1}>
+      <Modal
+        isVisible={isVisibleSearchModal}
+        animationIn="slideInUp"
+        deviceWidth={1}
+      >
         <Header>
           <Left>
-            <Button transparent onPress={toggleModal}>
+            <Button transparent onPress={toggleSearchModal}>
               <Text>취소</Text>
             </Button>
           </Left>
@@ -161,7 +168,7 @@ const TrendScreen = props => {
                   strStartDateInputValue: modalStrStartDateInputValue,
                   strEndDateInputValue: modalStrEndDateInputValue
                 });
-                toggleModal();
+                toggleSearchModal();
               }}
             >
               <Text>검색</Text>
@@ -249,7 +256,6 @@ const TrendScreen = props => {
           </Card>
         </Content>
       </Modal>
-      <OverlayLoading visible={isLoading}></OverlayLoading>
       <CustomHeader
         hasSegment={true}
         siteId={siteId}
@@ -290,7 +296,7 @@ const TrendScreen = props => {
           last
           style={styles.searchButton}
           onPress={() => {
-            toggleModal();
+            toggleSearchModal();
           }}
         >
           <EntypoIcon name="calendar"></EntypoIcon>
@@ -328,7 +334,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    trendDataReqHandler: (
+    handleTrendDataReq: (
       siteId,
       searchType,
       searchInterval,

@@ -6,7 +6,7 @@ import EntypoIcon from "react-native-vector-icons/Entypo";
 import PickerSelect from "react-native-picker-select";
 import _ from "lodash";
 // action
-import { saveSiteId } from "../actions/upsas/headerAction.js";
+import { saveSiteId } from "../actions/headerAction.js.js";
 
 // icon load
 EntypoIcon.loadFont();

@@ -1,21 +1,25 @@
 import React, { Component } from "react";
 import { createAppContainer } from "react-navigation";
-import { createBottomTabNavigator } from "react-navigation-tabs";
+import {
+  createBottomTabNavigator,
+  createMaterialTopTabNavigator
+} from "react-navigation-tabs";
 import { createStackNavigator } from "react-navigation-stack";
+import { Transition } from "react-native-reanimated";
 import EntypoIncon from "react-native-vector-icons/Entypo";
 import createAnimatedSwitchNavigator from "react-navigation-animated-switch";
 // screen
-import AuthScreen from "./containers/upsas/AuthScreen";
-import HomeScreen from "./containers/upsas/HomeScreen";
-import LoginScreen from "./containers/upsas/LoginScreen";
-import TrendScreen from "./containers/upsas/TrendScreen";
-import ReportScreen from "./containers/upsas/ReportScreen";
-import DiaryScreen from "./containers/upsas/DiaryScreen";
-import MoreScreen from "./containers/upsas/MoreScreen";
-import JoinScreen from "./containers/upsas/JoinScreen";
+import AuthScreen from "./containers/AuthScreen";
+import HomeScreen from "./containers/HomeScreen";
+import LoginScreen from "./containers/LoginScreen";
+import TrendScreen from "./containers/TrendScreen";
+import ReportScreen from "./containers/ReportScreen";
+import DiaryScreen from "./containers/DiaryScreen";
+import MoreScreen from "./containers/MoreScreen";
+import JoinScreen from "./containers/JoinScreen";
 //componet
-import DiaryUpdateScreen from "./containers/upsas/DiaryUpdateScreen";
-import DiaryAddScreen from "./containers/upsas/DiaryAddScreen";
+import DiaryUpdateScreen from "./containers/DiaryUpdateScreen";
+import DiaryAddScreen from "./containers/DiaryAddScreen";
 
 // icon load
 EntypoIncon.loadFont();

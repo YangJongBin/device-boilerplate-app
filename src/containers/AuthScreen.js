@@ -4,7 +4,7 @@ import { StyleSheet, AsyncStorage, Dimensions, View } from "react-native";
 import { connect } from "react-redux";
 import { Spinner, Container, Content, Thumbnail } from "native-base";
 //actions
-import { reqAuth, saveSiteId } from "../../actions/upsas/authAction";
+import { reqAuth, saveSiteId } from "../actions/authAction";
 
 const { height: deviceHeight } = Dimensions.get("window");
 
@@ -37,7 +37,7 @@ const AuthScreen = props => {
           <Thumbnail
             large
             square
-            source={require("../../../img/fp_logo.png")}
+            source={require("../../img/fp_logo.png")}
           ></Thumbnail>
           <Spinner size={10}></Spinner>
         </View>

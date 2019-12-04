@@ -1,4 +1,4 @@
-import { TREND_DATA, SAVE_SITEID } from "../actionTypes";
+import { TREND_DATA, SAVE_SITEID } from "./actionTypes";
 
 export const reqTrendData = (
   siteId,

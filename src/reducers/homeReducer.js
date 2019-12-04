@@ -2,7 +2,7 @@ import {
   HOME_DATA_REQUEST,
   HOME_DATA_SUCCESS,
   HOME_DATA_FAILURE
-} from "../../actions/actionTypes";
+} from "../actions/actionTypes";
 
 const defaultState = {
   // home 화면에 보여줄 데이터
@@ -39,7 +39,8 @@ const homeReducer = (state = defaultState, action) => {
   switch (action.type) {
     case HOME_DATA_REQUEST:
       return {
-        ...state
+        ...state,
+        isLoading: true
       };
     case HOME_DATA_SUCCESS:
       return {

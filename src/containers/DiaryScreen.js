@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import {
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  ScrollView,
+  RefreshControl
+} from "react-native";
 import { connect } from "react-redux";
-import { LocaleConfig, Calendar } from "react-native-calendars";
 import {
   Container,
   Content,
@@ -14,11 +19,10 @@ import {
   Button,
   Thumbnail
 } from "native-base";
-import OverlayLoading from "react-native-loading-spinner-overlay";
 import EntypoIcon from "react-native-vector-icons/Entypo";
 import _ from "lodash";
 //action
-import { reqDiaryData, saveDiaryList } from "../../actions/upsas/diaryAction";
+import { reqDiaryData, saveDiaryList } from "../actions/diaryAction";
 
 //icon load
 EntypoIcon.loadFont();
@@ -31,7 +35,6 @@ const DiaryScreen = props => {
     isLoading
   } = props.diaryReducerInfo; // 일지 리스트
   const [stateDiaryList, setStateDiaryList] = useState([]);
-
   // 일지 리스트 생성
   const makeDiaryListComponent = diaryDataList => {
     return _.map(diaryDataList, diaryDataInfo => {
@@ -55,10 +58,15 @@ const DiaryScreen = props => {
       );
     });
   };
+  const [refreshing, setRefreshing] = useState(false);
 
+  // 로딩 상태 변경
+  useEffect(() => {
+    setRefreshing(isLoading);
+  }, [isLoading]);
   //일지 정보 요청
   useEffect(() => {
-    props.diaryDataReqHandler();
+    props.handleDiaryDataReq();
   }, []);
 
   // 리스트 수정, 추가 떄마다 리스트를 갱신할 수 없으므로 state에 저장해서 관리 및 사용
@@ -77,7 +85,6 @@ const DiaryScreen = props => {
       });
 
       // 일지 리스트 추가와 갱신을 구분하는 조건문
-      // FIXME: 조건 에매함 오류 가능성 생각..
       if (!diaryInfoToSave.seq) {
         diaryInfoToSave.seq = _.head(updatedDiaryList).seq + 1;
         updatedDiaryList.unshift(diaryInfoToSave);
@@ -103,24 +110,15 @@ const DiaryScreen = props => {
 
   return (
     <Container>
-      <OverlayLoading visible={isLoading}></OverlayLoading>
       <Header>
         <Left>
           <Thumbnail
             square
             small
-            source={require("../../../img/fp_logo.png")}
+            source={require("../../img/fp_logo.png")}
           ></Thumbnail>
         </Left>
         <Right>
-          {/* <Button
-            transparent
-            onPress={() => {
-              //TODO: 리스트 검색기능 추후 업데이트 예정
-            }}
-          >
-            <EntypoIcon name="magnifying-glass" />
-          </Button> */}
           <Button
             transparent
             onPress={() => {
@@ -131,9 +129,19 @@ const DiaryScreen = props => {
           </Button>
         </Right>
       </Header>
-      <Content>
-        <List>{makeDiaryListComponent(stateDiaryList)}</List>
-      </Content>
+      <SafeAreaView style={styles.container}>
+        <ScrollView
+          bounces={false}
+          refreshControl={
+            <RefreshControl
+              refreshing={refreshing}
+              enabled={false}
+            ></RefreshControl>
+          }
+        >
+          <List>{makeDiaryListComponent(stateDiaryList)}</List>
+        </ScrollView>
+      </SafeAreaView>
     </Container>
   );
 };
@@ -146,16 +154,17 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    diaryDataReqHandler: () => {
+    handleDiaryDataReq: () => {
       dispatch(reqDiaryData());
-    },
-    diaryListSaveHandler: () => {
-      dispatch(saveDiaryList());
     }
   };
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1
+  },
+
   listHeader: {
     color: "gray",
     marginBottom: 20

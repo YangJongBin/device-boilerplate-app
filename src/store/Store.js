@@ -2,10 +2,7 @@ import React, { Component } from "react";
 import { createStore, applyMiddleware } from "redux";
 import { Provider } from "react-redux";
 import { Root } from "native-base";
-
-// import thunk from 'redux-thunk';
-
-import rootReducers from "../reducers/upsas/rootReducers";
+import rootReducers from "../reducers/rootReducers";
 import Navigation from "../Navigation";
 import middleware from "./middleware";
 

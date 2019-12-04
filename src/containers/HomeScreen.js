@@ -3,23 +3,20 @@ import { connect } from "react-redux";
 import {
   Text,
   StyleSheet,
-  Dimensions,
   ScrollView,
   RefreshControl,
-  SafeAreaView,
-  AsyncStorage
+  SafeAreaView
 } from "react-native";
-import { Container, Content, Card, CardItem, Body } from "native-base";
+import { Container, Card, CardItem, Body } from "native-base";
 import _ from "lodash";
 //component
-import Gauge from "../../components/Gauge";
-import PowerStatusGrid from "../../components/PowerStatusGrid";
-import WeatherCastGrid from "../../components/WeatherCastGrid";
-import CustomHeader from "../../components/CustomHeader";
-import GrowthChart from "../../components/GrowthChart";
-import OverlayLoading from "react-native-loading-spinner-overlay";
+import Gauge from "../components/Gauge";
+import PowerStatusGrid from "../components/PowerStatusGrid";
+import WeatherCastGrid from "../components/WeatherCastGrid";
+import CustomHeader from "../components/CustomHeader";
+import GrowthChart from "../components/GrowthChart";
 //action
-import { reqHomeData } from "../../actions/upsas/homeAction";
+import { reqHomeData } from "../actions/homeAction";
 
 const waitRefresh = timeout => {
   return new Promise(resolve => {
@@ -40,25 +37,25 @@ const HomeScreen = props => {
   const { userInfo } = authReducerInfo;
   const { siteList } = userInfo;
   const { siteId } = siteIdSaveReducerInfo; // 선택된 장소 id
-  //state
-  const [refreshing, setRefreshing] = useState(false);
-
+  const [refreshing, setRefreshing] = useState(false); // 새로고침 or 로딩 상태
+  // 새로고침 이벤트 발생시 데이터 재요청 실행
   const onRefresh = useCallback(() => {
-    setRefreshing(true);
-    props.homeDataReqHandler(siteId);
-    waitRefresh(2000).then(() => setRefreshing(false));
-  }, [refreshing, siteId]);
+    props.handleHomeDataReq(siteId);
+  }, [siteId]);
+
+  // 데이터 요청에 따른 로딩 상태 변경
+  useEffect(() => {
+    setRefreshing(isLoading);
+  }, [isLoading]);
 
   // 메인 데이터 요청
   useEffect(() => {
-    siteId && props.homeDataReqHandler(siteId);
+    siteId && props.handleHomeDataReq(siteId);
   }, [siteId]);
 
   return (
     <Container style={styles.container}>
-      <OverlayLoading visible={isLoading}></OverlayLoading>
       <CustomHeader siteId={siteId} siteList={siteList}></CustomHeader>
-      {/* <Content style={styles.content}> */}
       <SafeAreaView style={styles.container}>
         <ScrollView
           style={styles.scrollView}
@@ -111,7 +108,6 @@ const HomeScreen = props => {
           </Card>
         </ScrollView>
       </SafeAreaView>
-      {/* </Content> */}
     </Container>
   );
 };
@@ -126,7 +122,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    homeDataReqHandler: siteId => {
+    handleHomeDataReq: siteId => {
       dispatch(reqHomeData(siteId));
     }
   };

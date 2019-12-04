@@ -1,4 +1,4 @@
-import { HOME_DATA, SAVE_SITEID } from "../actionTypes";
+import { HOME_DATA, SAVE_SITEID } from "./actionTypes";
 
 export const reqHomeData = (siteId = "") => {
   return {

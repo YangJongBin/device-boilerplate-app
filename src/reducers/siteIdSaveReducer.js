@@ -2,7 +2,7 @@ import {
   SAVE_SITEID_REQUEST,
   SAVE_SITEID_SUCCESS,
   SAVE_SITEID_FAILURE
-} from "../../actions/actionTypes";
+} from "../actions/actionTypes";
 
 const defaultState = {
   siteId: ""

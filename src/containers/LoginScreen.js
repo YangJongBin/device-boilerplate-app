@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import { Text, StyleSheet } from "react-native";
+import { Text, StyleSheet, ActivityIndicator } from "react-native";
 import { Container, Input, Form, Item, Icon, Button, Toast } from "native-base";
 //actions...
-import { reqLogin } from "../../actions/upsas/authAction";
-import OverlayLoading from "react-native-loading-spinner-overlay";
+import { reqLogin } from "../actions/authAction";
 
 const LoginScreen = props => {
   const { isLoading, isLoggedIn, naviPath } = props.authReducerInfo; // 로그인 reduce 정보
@@ -38,7 +37,6 @@ const LoginScreen = props => {
 
   return (
     <Container style={styles.container}>
-      <OverlayLoading visible={isLoading}></OverlayLoading>
       <Form style={styles.loginForm}>
         <Item>
           <Icon name="person" />
@@ -65,11 +63,11 @@ const LoginScreen = props => {
           disabled={false}
           onPress={() => {
             checkLoginInfo(userId, password);
-            // props.navigation.navigate(!isLoggedIn ? "Login" : "AuthScreen");
           }}
           style={styles.loginBtn}
         >
-          <Text style={styles.loginText}> Sign In </Text>
+          <Text style={styles.loginText}> {isLoading ? "" : "Sign In"} </Text>
+          <ActivityIndicator animating={isLoading}></ActivityIndicator>
         </Button>
       </Form>
     </Container>

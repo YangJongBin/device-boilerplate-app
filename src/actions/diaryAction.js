@@ -1,4 +1,4 @@
-import { DIARY_DATA, SAVE_DIARYINFO, DELETE_DIARYINFO } from "../actionTypes";
+import { DIARY_DATA, SAVE_DIARYINFO, DELETE_DIARYINFO } from "./actionTypes";
 
 export const reqDiaryData = () => {
   return {

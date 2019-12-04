@@ -1,4 +1,4 @@
-import { AUTH, LOGIN, LOGOUT, SAVE_SITEID } from "../actionTypes";
+import { AUTH, LOGIN, LOGOUT, SAVE_SITEID } from "./actionTypes";
 
 export const reqAuth = () => {
   return {

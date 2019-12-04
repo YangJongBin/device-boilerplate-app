@@ -1,4 +1,8 @@
-import { TREND_DATA_FAILURE, TREND_DATA_REQUEST, TREND_DATA_SUCCESS } from "../../actions/actionTypes";
+import {
+  TREND_DATA_FAILURE,
+  TREND_DATA_REQUEST,
+  TREND_DATA_SUCCESS
+} from "../actions/actionTypes";
 
 const defaultState = {
   trendDataInfo: {
@@ -12,7 +16,8 @@ const trendReducer = (state = defaultState, action) => {
   switch (action.type) {
     case TREND_DATA_REQUEST:
       return {
-        ...state
+        ...state,
+        isLoading: true
       };
     case TREND_DATA_SUCCESS:
       return {
