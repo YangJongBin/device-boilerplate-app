@@ -37,16 +37,10 @@ EntypoIcon.loadFont();
 const makeLineChartList = lineChartDataList => {
   return _.map(lineChartDataList, lineChartDataInfo => {
     return (
-      <Card>
+      <Card style={styles.card}>
         <LineChart chartInfo={lineChartDataInfo}></LineChart>
       </Card>
     );
-  });
-};
-
-const waitRefresh = timeout => {
-  return new Promise(resolve => {
-    setTimeout(resolve, timeout);
   });
 };
 
@@ -389,6 +383,13 @@ const styles = StyleSheet.create({
   },
   hideCard: {
     display: "none"
+  },
+  card: {
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  noDataText: {
+    margin: 120
   }
 });
 

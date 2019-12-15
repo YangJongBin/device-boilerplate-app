@@ -54,7 +54,7 @@ const HomeScreen = props => {
   }, [siteId]);
 
   return (
-    <Container style={styles.container}>
+    <Container>
       <CustomHeader siteId={siteId} siteList={siteList}></CustomHeader>
       <SafeAreaView style={styles.container}>
         <ScrollView

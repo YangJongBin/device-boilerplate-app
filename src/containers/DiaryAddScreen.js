@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { View, Text, TextInput, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, StyleSheet, Image, Alert } from "react-native";
 import {
   Container,
   Content,
@@ -13,8 +13,6 @@ import {
 } from "native-base";
 import moment from "moment";
 import EntypoIcon from "react-native-vector-icons/Entypo";
-import ImagePicker from "react-native-image-picker";
-import fs from "react-native-fs";
 import _ from "lodash";
 //action
 import { saveDiaryInfo } from "../actions/diaryAction";
@@ -100,7 +98,7 @@ const DiaryMemoView = props => {
               //     setImageSourceList([...imageSourceList].concat(res.uri));
               //   }
               // });
-              alert("준비중입니다.");
+              Alert.alert("", "업데이트 예정입니다.");
             }}
           >
             <EntypoIcon name="folder-images"></EntypoIcon>
@@ -111,7 +109,7 @@ const DiaryMemoView = props => {
             transparent
             onPress={() => {
               // TODO: 카메라 연동 기능
-              alert("준비중입니다.");
+              Alert.alert("", "업데이트 예정입니다.");
             }}
           >
             <EntypoIcon name="camera"></EntypoIcon>

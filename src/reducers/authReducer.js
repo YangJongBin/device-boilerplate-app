@@ -30,9 +30,7 @@ const authReducer = (state = defaultState, action) => {
   switch (action.type) {
     case AUTH_REQUEST: {
       return {
-        ...state,
-        isLoggedIn: false,
-        isLoading: true
+        ...state
       };
     }
     case AUTH_SUCCESS: {
@@ -48,7 +46,6 @@ const authReducer = (state = defaultState, action) => {
     case AUTH_FAILURE: {
       return {
         ...state,
-        isLoggedIn: false,
         isLoading: false,
         naviPath: "Login"
       };
@@ -56,7 +53,6 @@ const authReducer = (state = defaultState, action) => {
     case LOGIN_REQUEST:
       return {
         ...state,
-        isLoggedIn: false,
         isLoading: true,
         naviPath: "Login"
       };
@@ -68,6 +64,7 @@ const authReducer = (state = defaultState, action) => {
         naviPath: "AuthScreen"
       };
     case LOGIN_FAILURE:
+      console.log(JSON.stringify(action.error));
       return {
         ...state,
         isLoggedIn: false,

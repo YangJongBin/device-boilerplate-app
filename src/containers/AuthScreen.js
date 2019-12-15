@@ -9,7 +9,7 @@ import { reqAuth, saveSiteId } from "../actions/authAction";
 const { height: deviceHeight } = Dimensions.get("window");
 
 const AuthScreen = props => {
-  const { isLoggedIn, userInfo, naviPath } = props.authReducerInfo; // 인증 reducer 정보
+  const { userInfo, naviPath } = props.authReducerInfo; // 인증 reducer 정보
   const defaultSiteId = _.head(userInfo.siteList).siteId;
 
   // 인증 요청
@@ -21,7 +21,7 @@ const AuthScreen = props => {
   useEffect(() => {
     props.navigation.navigate(naviPath);
     naviPath === "Login" && AsyncStorage.clear(); // 로그인 페이지로 이동시 asnycStorage 초기화
-  }, [isLoggedIn]);
+  }, [naviPath]);
 
   // 초기 장소 지정
   useEffect(() => {

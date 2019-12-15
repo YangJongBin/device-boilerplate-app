@@ -32,8 +32,9 @@ const LoginScreen = props => {
   };
 
   useEffect(() => {
+    // !isLoggedIn && alert(isLoggedIn);
     props.navigation.navigate(naviPath);
-  }, [isLoggedIn]);
+  }, [isLoggedIn, naviPath]);
 
   return (
     <Container style={styles.container}>

@@ -118,6 +118,9 @@ const DiaryScreen = props => {
             source={require("../../img/fp_logo.png")}
           ></Thumbnail>
         </Left>
+        <Body>
+          <Text>Diary</Text>
+        </Body>
         <Right>
           <Button
             transparent
