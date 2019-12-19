@@ -115,7 +115,7 @@ const DiaryScreen = props => {
           <Thumbnail
             square
             small
-            source={require("../../img/fp_logo.png")}
+            source={require("../../img/s2w_logo.png")}
           ></Thumbnail>
         </Left>
         <Body>

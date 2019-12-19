@@ -37,7 +37,7 @@ const AuthScreen = props => {
           <Thumbnail
             large
             square
-            source={require("../../img/fp_logo.png")}
+            source={require("../../img/s2w_logo.png")}
           ></Thumbnail>
           <Spinner size={10}></Spinner>
         </View>

@@ -32,7 +32,7 @@ const CustomHeader = props => {
         <Thumbnail
           small
           square
-          source={require("../../img/fp_logo.png")}
+          source={require("../../img/s2w_logo.png")}
           style={styles.thumbnail}
         ></Thumbnail>
       </Left>
